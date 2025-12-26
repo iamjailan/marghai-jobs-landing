@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Search, MapPin, Clock, TrendingUp } from "lucide-react";
 
-// Dummy job data
 const jobs = [
   {
     id: 1,
@@ -108,7 +107,6 @@ const JobsPage = () => {
             {filteredJobs.length} jobs available across Afghanistan
           </p>
 
-          {/* Filters */}
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl">
@@ -134,7 +132,6 @@ const JobsPage = () => {
             </div>
           </div>
 
-          {/* Job Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map((job) => {
               const isNew = isToday(job.postedDate);

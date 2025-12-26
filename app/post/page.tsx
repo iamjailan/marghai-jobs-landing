@@ -47,10 +47,8 @@ const CreateJobPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Main Content */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-2xl mb-4">
               <Sparkles className="w-8 h-8 text-white" />
@@ -66,12 +64,10 @@ const CreateJobPage = () => {
             </p>
           </div>
 
-          {/* Form */}
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="bg-white rounded-2xl shadow-2xl p-8 md:p-10"
           >
-            {/* Job Title */}
             <div className="mb-6">
               <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                 <Briefcase className="w-5 h-5 text-[#0066FF]" />
@@ -104,7 +100,6 @@ const CreateJobPage = () => {
               )}
             </div>
 
-            {/* Company Name */}
             <div className="mb-6">
               <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                 <Building className="w-5 h-5 text-[#0066FF]" />
@@ -137,7 +132,6 @@ const CreateJobPage = () => {
               )}
             </div>
 
-            {/* Location */}
             <div className="mb-6">
               <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                 <MapPin className="w-5 h-5 text-[#0066FF]" />
@@ -168,9 +162,7 @@ const CreateJobPage = () => {
               )}
             </div>
 
-            {/* Job Type and Salary - Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              {/* Job Type */}
               <div>
                 <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                   <Clock className="w-5 h-5 text-[#0066FF]" />
@@ -200,7 +192,6 @@ const CreateJobPage = () => {
                 )}
               </div>
 
-              {/* Salary */}
               <div>
                 <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                   <DollarSign className="w-5 h-5 text-[#0066FF]" />
@@ -231,7 +222,6 @@ const CreateJobPage = () => {
               </div>
             </div>
 
-            {/* Description */}
             <div className="mb-8">
               <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                 <FileText className="w-5 h-5 text-[#0066FF]" />
@@ -264,7 +254,6 @@ const CreateJobPage = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
