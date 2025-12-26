@@ -93,11 +93,12 @@ const CreateJobPage = () => {
                 }`}
                 placeholder="e.g. Senior Software Engineer"
               />
-              {errors.jobTitle && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.jobTitle.message}
-                </p>
-              )}
+              {errors.jobTitle &&
+                typeof errors.jobTitle.message === "string" && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.jobTitle.message}
+                  </p>
+                )}
             </div>
 
             <div className="mb-6">
@@ -125,10 +126,8 @@ const CreateJobPage = () => {
                 }`}
                 placeholder="e.g. Tech Solutions Afghanistan"
               />
-              {errors.companyName && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.companyName.message}
-                </p>
+              {typeof errors.email?.message === "string" && (
+                <p>{errors.email.message}</p>
               )}
             </div>
 
@@ -155,11 +154,12 @@ const CreateJobPage = () => {
                 <option value="Jalalabad">Jalalabad</option>
                 <option value="Remote">Remote</option>
               </select>
-              {errors.location && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.location.message}
-                </p>
-              )}
+              {errors.location &&
+                typeof errors.location.message === "string" && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.location.message}
+                  </p>
+                )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -185,11 +185,12 @@ const CreateJobPage = () => {
                   <option value="Freelance">Freelance</option>
                   <option value="Internship">Internship</option>
                 </select>
-                {errors.jobType && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.jobType.message}
-                  </p>
-                )}
+                {errors.jobType &&
+                  typeof errors.jobType.message === "string" && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.jobType.message}
+                    </p>
+                  )}
               </div>
 
               <div>
@@ -214,7 +215,7 @@ const CreateJobPage = () => {
                   }`}
                   placeholder="e.g. 25,000 AFN or Competitive"
                 />
-                {errors.salary && (
+                {errors.salary && typeof errors.salary.message === "string" && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.salary.message}
                   </p>
@@ -239,7 +240,7 @@ const CreateJobPage = () => {
                     message: "Description must be less than 1000 characters",
                   },
                 })}
-                rows="6"
+                rows={6}
                 className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all resize-none ${
                   errors.description
                     ? "border-red-400 focus:border-red-500"
@@ -247,11 +248,12 @@ const CreateJobPage = () => {
                 }`}
                 placeholder="Describe the role, responsibilities, and requirements..."
               />
-              {errors.description && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.description.message}
-                </p>
-              )}
+              {errors.description &&
+                typeof errors.description.message === "string" && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.description.message}
+                  </p>
+                )}
             </div>
 
             <button
