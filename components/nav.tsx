@@ -5,16 +5,17 @@ import Link from "next/link";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 cursor-pointer">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center">
               <Briefcase className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-linear-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
               Marghai
             </span>
           </div>
@@ -29,15 +30,9 @@ const Navbar = () => {
             >
               Jobs
             </Link>
-            <button className="text-gray-600 hover:text-[#0066FF] transition-colors">
-              About
-            </button>
-            <button className="text-gray-600 hover:text-[#0066FF] transition-colors">
-              Contact
-            </button>
             <Link
-              href={"/post"}
-              className="bg-gradient-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300"
+              href={isLoggedIn ? "/post" : "/login"}
+              className="bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300"
             >
               Post a Job
             </Link>
@@ -82,7 +77,7 @@ const Navbar = () => {
             </button>
             <Link
               href={"/post"}
-              className="w-full bg-gradient-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full"
+              className="w-full bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full"
             >
               Post a Job
             </Link>
