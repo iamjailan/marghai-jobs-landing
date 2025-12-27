@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Briefcase, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { useAppSelector } from "@/hooks/redux";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">

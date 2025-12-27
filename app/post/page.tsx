@@ -10,6 +10,7 @@ import {
   Clock,
   FileText,
   Sparkles,
+  Calendar,
 } from "lucide-react";
 
 const CreateJobPage = () => {
@@ -34,6 +35,7 @@ const CreateJobPage = () => {
       location: data.location,
       type: data.jobType,
       salary: data.salary,
+      deadline: data.deadline,
       postedDate: new Date(),
       description: data.description,
       logo: data.companyName.substring(0, 2).toUpperCase(),
@@ -221,6 +223,39 @@ const CreateJobPage = () => {
                   </p>
                 )}
               </div>
+            </div>
+
+            <div className="mb-6">
+              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                <Calendar className="w-5 h-5 text-[#0066FF]" />
+                Application Deadline *
+              </label>
+              <input
+                type="date"
+                {...register("deadline", {
+                  required: "Application deadline is required",
+                  validate: (value) => {
+                    const selectedDate = new Date(value);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    if (selectedDate < today) {
+                      return "Deadline must be in the future";
+                    }
+                    return true;
+                  },
+                })}
+                className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
+                  errors.deadline
+                    ? "border-red-400 focus:border-red-500"
+                    : "border-gray-200 focus:border-[#0066FF]"
+                }`}
+              />
+              {errors.deadline &&
+                typeof errors.deadline.message === "string" && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.deadline.message}
+                  </p>
+                )}
             </div>
 
             <div className="mb-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useAppDispatch } from "@/hooks/redux";
+import { login } from "@/store/authSlice";
 
 type LoginFormData = {
   email: string;
@@ -38,9 +41,19 @@ export function LoginForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onSubmit = async (data: LoginFormData) => {
     console.log("Form submitted:", data);
+    // For now, just set logged in to true on form submission
+    // In a real app, you would validate credentials first
+    dispatch(login());
+    if (mode === "signin") {
+      router.push("/");
+    } else {
+      router.push("/login");
+    }
   };
 
   return (

@@ -1,4 +1,5 @@
 import Navbar from "@/components/nav";
+import { ReduxProvider } from "@/store/provider";
 import "./globals.css";
 
 export const metadata = {
@@ -14,8 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-gray-900">
-        <Navbar />
-        {children}
+        <ReduxProvider>
+          <Navbar />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
