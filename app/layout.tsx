@@ -1,6 +1,7 @@
 import Navbar from "@/components/nav";
 import { ReduxProvider } from "@/store/provider";
 import "./globals.css";
+import Providers from "@/lib/provider";
 
 export const metadata = {
   title: "Marghai Jobs",
@@ -15,10 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-gray-900">
-        <ReduxProvider>
-          <Navbar />
-          {children}
-        </ReduxProvider>
+        <Providers>
+          <ReduxProvider>
+            <Navbar />
+            {children}
+          </ReduxProvider>
+        </Providers>
       </body>
     </html>
   );

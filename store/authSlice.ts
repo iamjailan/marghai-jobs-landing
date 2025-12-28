@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   isLoggedIn: boolean;
+  token: string;
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
+  token: "",
 };
 
 const authSlice = createSlice({
@@ -15,14 +17,15 @@ const authSlice = createSlice({
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
-    login: (state) => {
-      state.isLoggedIn = true;
-    },
     logout: (state) => {
       state.isLoggedIn = false;
+      state.token = "";
+    },
+    setLoginToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
     },
   },
 });
 
-export const { setLoggedIn, login, logout } = authSlice.actions;
+export const { setLoggedIn, logout, setLoginToken } = authSlice.actions;
 export default authSlice.reducer;

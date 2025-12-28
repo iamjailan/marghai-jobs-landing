@@ -20,7 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
-import { login } from "@/store/authSlice";
 
 type LoginFormData = {
   email: string;
@@ -46,9 +45,7 @@ export function LoginForm({
 
   const onSubmit = async (data: LoginFormData) => {
     console.log("Form submitted:", data);
-    // For now, just set logged in to true on form submission
-    // In a real app, you would validate credentials first
-    dispatch(login());
+
     if (mode === "signin") {
       router.push("/");
     } else {
