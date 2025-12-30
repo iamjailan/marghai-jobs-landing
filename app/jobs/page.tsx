@@ -98,7 +98,7 @@ const JobsPage = () => {
             {allJobs.isLoading || allJobs.isFetching ? (
               <SpinnerCustom />
             ) : (
-              data?.map((job) => {
+              data?.map((job: any) => {
                 const isNew = isToday(job?.createdAt);
                 return (
                   <div

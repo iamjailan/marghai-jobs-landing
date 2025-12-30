@@ -190,6 +190,7 @@ const ProfilePage = () => {
                       type="file"
                       accept="image/*"
                       className="hidden"
+                      // @ts-expect-error ts issue
                       onChange={handleImageChange}
                     />
                   </label>

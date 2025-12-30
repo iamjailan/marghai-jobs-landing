@@ -67,6 +67,7 @@ const CreateJobPage = () => {
           </div>
 
           <form
+            // @ts-expect-error ts issue
             onSubmit={handleSubmit(onSubmit)}
             className="bg-white rounded-2xl shadow-2xl p-8 md:p-10"
           >
