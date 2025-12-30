@@ -13,7 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { CreateJobInput } from "@/query/functions";
-import { useCreateJob, useGetAllJobs } from "@/query/hooks";
+import { useCreateJob, useGetAllJobs, useGetCustomerJob } from "@/query/hooks";
 import { useRouter } from "next/navigation";
 
 const CreateJobPage = () => {
@@ -26,6 +26,7 @@ const CreateJobPage = () => {
   const useJob = useCreateJob();
   const router = useRouter();
   const useGetJob = useGetAllJobs({ filter: "" });
+  const useCustomerJobs = useGetCustomerJob({ filter: "" });
 
   const onSubmit = async (data: CreateJobInput) => {
     const newJob = {
@@ -42,22 +43,23 @@ const CreateJobPage = () => {
       onSuccess: () => {
         reset();
         useGetJob.refetch();
+        useCustomerJobs.refetch();
         router.push("/jobs");
       },
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-2xl mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-2xl mb-4">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Post a{" "}
-              <span className="bg-gradient-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
                 New Job
               </span>
             </h1>

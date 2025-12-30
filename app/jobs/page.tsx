@@ -55,7 +55,7 @@ const JobsPage = () => {
             {jobsCount} jobs available across Afghanistan
           </p>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+          <section className="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl">
                 <Search className="w-5 h-5 text-gray-400" />
@@ -92,110 +92,112 @@ const JobsPage = () => {
                 className="w-20 px-3 py-2 bg-gray-50 rounded-lg outline-none text-gray-700 border border-gray-200 focus:border-[#00cbff]"
               />
             </div>
-          </div>
+          </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {allJobs.isLoading || allJobs.isFetching ? (
-              <SpinnerCustom />
-            ) : (
-              data?.map((job: any) => {
-                const isNew = isToday(job?.createdAt);
-                return (
-                  <div
-                    key={job.id}
-                    className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${
-                      isNew ? "ring-2 ring-[#00cbff] relative" : ""
-                    }`}
-                  >
-                    {isNew && (
-                      <div className="absolute top-0 right-0 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-4 py-1 rounded-bl-xl text-sm font-semibold flex items-center gap-1">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                        New Today
-                      </div>
-                    )}
+          {allJobs.isLoading || allJobs.isFetching ? (
+            <SpinnerCustom />
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {data?.map((job: any) => {
+                  const isNew = isToday(job?.createdAt);
+                  return (
+                    <div
+                      key={job.id}
+                      className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${
+                        isNew ? "ring-2 ring-[#00cbff] relative" : ""
+                      }`}
+                    >
+                      {isNew && (
+                        <div className="absolute top-0 right-0 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-4 py-1 rounded-bl-xl text-sm font-semibold flex items-center gap-1">
+                          <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                          New Today
+                        </div>
+                      )}
 
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div
-                          className={`w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center text-white font-bold text-xl ${
-                            isNew ? "animate-pulse" : ""
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div
+                            className={`w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center text-white font-bold text-xl ${
+                              isNew ? "animate-pulse" : ""
+                            }`}
+                          >
+                            {job?.logo || "PP"}
+                          </div>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                          {job?.title}
+                        </h3>
+                        <p className="text-gray-600 font-medium mb-4">
+                          {job?.customer?.first_name}
+                        </p>
+
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-sm">{job?.location}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <Clock className="w-4 h-4" />
+                            <span className="text-sm">{job?.type}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <TrendingUp className="w-4 h-4" />
+                            <span className="text-sm font-semibold">
+                              {job?.salary}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-gray-600 text-sm mb-6 line-clamp-2">
+                          {job?.description}
+                        </p>
+
+                        <button
+                          className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
+                            isNew
+                              ? "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                           }`}
                         >
-                          {job?.logo || "PP"}
-                        </div>
+                          Apply Now
+                        </button>
                       </div>
-
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {job?.title}
-                      </h3>
-                      <p className="text-gray-600 font-medium mb-4">
-                        {job?.customer?.first_name}
-                      </p>
-
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <MapPin className="w-4 h-4" />
-                          <span className="text-sm">{job?.location}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <Clock className="w-4 h-4" />
-                          <span className="text-sm">{job?.type}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <TrendingUp className="w-4 h-4" />
-                          <span className="text-sm font-semibold">
-                            {job?.salary}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p className="text-gray-600 text-sm mb-6 line-clamp-2">
-                        {job?.description}
-                      </p>
-
-                      <button
-                        className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
-                          isNew
-                            ? "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                      >
-                        Apply Now
-                      </button>
                     </div>
-                  </div>
-                );
-              })
-            )}
-          </div>
+                  );
+                })}
+              </div>
 
-          <div className="flex items-center justify-center gap-4">
-            <button
-              onClick={() => setOffset(offset <= 0 ? 0 : offset - 1)}
-              disabled={!hasPrevPage}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                !hasPrevPage
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-white cursor-pointer text-gray-700 hover:bg-gray-100 shadow-lg hover:shadow-xl"
-              }`}
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Previous
-            </button>
+              <main className="flex items-center justify-center gap-4">
+                <button
+                  onClick={() => setOffset(offset <= 0 ? 0 : offset - 1)}
+                  disabled={!hasPrevPage}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    !hasPrevPage
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      : "bg-white cursor-pointer text-gray-700 hover:bg-gray-100 shadow-lg hover:shadow-xl"
+                  }`}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                  Previous
+                </button>
 
-            <button
-              onClick={() => setOffset(offset + 1)}
-              disabled={!hasNextPage}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                !hasNextPage
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-linear-to-r cursor-pointer from-[#00cbff] to-[#0066FF] text-white hover:shadow-xl"
-              }`}
-            >
-              Next
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+                <button
+                  onClick={() => setOffset(offset + 1)}
+                  disabled={!hasNextPage}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    !hasNextPage
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      : "bg-linear-to-r cursor-pointer from-[#00cbff] to-[#0066FF] text-white hover:shadow-xl"
+                  }`}
+                >
+                  Next
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </main>
+            </>
+          )}
         </div>
       </section>
     </div>

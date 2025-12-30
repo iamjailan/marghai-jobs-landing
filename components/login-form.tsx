@@ -40,7 +40,7 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormData>();
   const dispatch = useAppDispatch();
   const useAccount = useCreateAccount();
@@ -147,8 +147,12 @@ export function LoginForm({
                 )}
               </Field>
               <Field>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting
+                <Button
+                  type="submit"
+                  className="cursor-pointer disabled:cursor-not-allowed"
+                  disabled={loginAccount.isPending || useAccount.isPending}
+                >
+                  {loginAccount.isPending || useAccount.isPending
                     ? mode === "signin"
                       ? "Logging in..."
                       : "Signing up..."
