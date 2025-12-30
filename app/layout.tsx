@@ -2,6 +2,7 @@ import Navbar from "@/components/nav";
 import { ReduxProvider } from "@/store/provider";
 import "./globals.css";
 import Providers from "@/lib/provider";
+import AuthGuard from "@/components/auth";
 
 export const metadata = {
   title: "Marghai Jobs",
@@ -19,7 +20,7 @@ export default function RootLayout({
         <Providers>
           <ReduxProvider>
             <Navbar />
-            {children}
+            <AuthGuard>{children}</AuthGuard>
           </ReduxProvider>
         </Providers>
       </body>
