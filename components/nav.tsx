@@ -1,12 +1,22 @@
 "use client";
 import { useState } from "react";
-import { Briefcase, Menu, X } from "lucide-react";
+import { Briefcase, LogOut, Menu, User, X } from "lucide-react";
 import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/authSlice";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const dispatch = useDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.replace("/jobs");
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
@@ -37,14 +47,28 @@ const Navbar = () => {
             >
               Post a Job
             </Link>
-
             {isLoggedIn && (
-              <Link
-                href={"/profile"}
-                className="bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300"
-              >
-                Profile
-              </Link>
+              <>
+                <Link
+                  href="/profile"
+                  className="flex items-center justify-center w-10 h-10 rounded-full 
+                 bg-linear-to-r from-[#00cbff] to-[#0066FF] 
+                 text-white hover:shadow-lg transition-all"
+                  title="Profile"
+                >
+                  <User size={20} />
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center cursor-pointer justify-center w-10 h-10 rounded-full 
+                 bg-red-500 text-white hover:bg-red-600 
+                 transition-all"
+                  title="Logout"
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
             )}
           </div>
 
@@ -92,12 +116,27 @@ const Navbar = () => {
               Post a Job
             </Link>
             {isLoggedIn && (
-              <Link
-                href={"/profile"}
-                className="w-full bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full"
-              >
-                Post a Job
-              </Link>
+              <>
+                <Link
+                  href="/profile"
+                  className="flex mt-3 w-[50px] h-[50px] items-center justify-center px-4 py-2 rounded-sm
+                 bg-linear-to-r from-[#00cbff] to-[#0066FF] 
+                 text-white hover:shadow-lg transition-all"
+                  title="Profile"
+                >
+                  <User size={20} />
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center cursor-pointer justify-center px-4 py-2 rounded-full 
+                 bg-red-500 text-white hover:bg-red-600 
+                 transition-all"
+                  title="Logout"
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
             )}
           </div>
         </div>
