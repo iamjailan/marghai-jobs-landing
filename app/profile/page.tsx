@@ -23,6 +23,7 @@ import {
 } from "@/query/hooks";
 import Image from "next/image";
 import Link from "next/link";
+import { SpinnerCustom } from "@/components/loading";
 
 type ProfileForm = {
   first_name: string;
@@ -156,6 +157,10 @@ const ProfilePage = () => {
       },
     });
   };
+
+  if (useGetMe.isLoading) {
+    return <SpinnerCustom />;
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
@@ -398,202 +403,206 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Your Posted Jobs ({customerJobsCount})
-            </h2>
+          {useCustomerJobs.isLoading || useCustomerJobs.isPending ? (
+            <SpinnerCustom />
+          ) : (
+            <div className="bg-white rounded-2xl shadow-2xl p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Your Posted Jobs ({customerJobsCount})
+              </h2>
 
-            {userJobs?.length === 0 ? (
-              <div className="text-center py-12">
-                <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              {userJobs?.length === 0 ? (
+                <div className="text-center py-12">
+                  <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 
-                <p className="text-gray-500 text-lg mb-6">
-                  You have not posted any jobs yet
-                </p>
+                  <p className="text-gray-500 text-lg mb-6">
+                    You have not posted any jobs yet
+                  </p>
 
-                <Link
-                  href={"/post"}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg
+                  <Link
+                    href={"/post"}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg
                hover:bg-blue-700 transition-colors"
-                >
-                  <Briefcase className="w-5 h-5" />
-                  Post a Job
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {userJobs?.map((job: any) => (
-                  <div
-                    key={job.id}
-                    className="border-2 border-gray-100 rounded-xl p-6 hover:border-[#00cbff] transition-all"
                   >
-                    {editingJobId === job.id ? (
-                      // Edit Form
-                      <form
-                        onSubmit={handleSubmitJob(handleJobUpdate)}
-                        className="space-y-4"
-                      >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Job Title *
-                            </label>
-                            <input
-                              type="text"
-                              {...registerJob("jobTitle", {
-                                required: "Required",
-                              })}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Company *
-                            </label>
-                            <input
-                              type="text"
-                              {...registerJob("companyName", {
-                                required: "Required",
-                              })}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Location *
-                            </label>
-                            <select
-                              {...registerJob("location", {
-                                required: "Required",
-                              })}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                            >
-                              <option value="Kabul">Kabul</option>
-                              <option value="Herat">Herat</option>
-                              <option value="Mazar-i-Sharif">
-                                Mazar-i-Sharif
-                              </option>
-                              <option value="Kandahar">Kandahar</option>
-                              <option value="Jalalabad">Jalalabad</option>
-                              <option value="Remote">Remote</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Job Type *
-                            </label>
-                            <select
-                              {...registerJob("jobType", {
-                                required: "Required",
-                              })}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                            >
-                              <option value="Full-time">Full-time</option>
-                              <option value="Part-time">Part-time</option>
-                              <option value="Contract">Contract</option>
-                              <option value="Freelance">Freelance</option>
-                            </select>
-                          </div>
-                          <div className="md:col-span-2">
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Salary *
-                            </label>
-                            <input
-                              type="text"
-                              {...registerJob("salary", {
-                                required: "Required",
-                              })}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                              Description *
-                            </label>
-                            <textarea
-                              {...registerJob("description", {
-                                required: "Required",
-                              })}
-                              rows={3}
-                              className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF] resize-none"
-                            />
-                          </div>
-                        </div>
-                        <div className="flex gap-3">
-                          <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="px-6 py-2 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white rounded-lg hover:shadow-lg transition-all"
-                          >
-                            {isSubmitting ? "Saving..." : "Save"}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setEditingJobId(null)}
-                            className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
-                    ) : (
-                      // Display Mode
-                      <>
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center text-white font-bold">
-                              {job.logo}
+                    <Briefcase className="w-5 h-5" />
+                    Post a Job
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {userJobs?.map((job: any) => (
+                    <div
+                      key={job.id}
+                      className="border-2 border-gray-100 rounded-xl p-6 hover:border-[#00cbff] transition-all"
+                    >
+                      {editingJobId === job.id ? (
+                        // Edit Form
+                        <form
+                          onSubmit={handleSubmitJob(handleJobUpdate)}
+                          className="space-y-4"
+                        >
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Job Title *
+                              </label>
+                              <input
+                                type="text"
+                                {...registerJob("jobTitle", {
+                                  required: "Required",
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              />
                             </div>
                             <div>
-                              <h3 className="text-xl font-bold text-gray-900">
-                                {job.title}
-                              </h3>
-                              <p className="text-gray-600">{job.company}</p>
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Company *
+                              </label>
+                              <input
+                                type="text"
+                                {...registerJob("companyName", {
+                                  required: "Required",
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Location *
+                              </label>
+                              <select
+                                {...registerJob("location", {
+                                  required: "Required",
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              >
+                                <option value="Kabul">Kabul</option>
+                                <option value="Herat">Herat</option>
+                                <option value="Mazar-i-Sharif">
+                                  Mazar-i-Sharif
+                                </option>
+                                <option value="Kandahar">Kandahar</option>
+                                <option value="Jalalabad">Jalalabad</option>
+                                <option value="Remote">Remote</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Job Type *
+                              </label>
+                              <select
+                                {...registerJob("jobType", {
+                                  required: "Required",
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              >
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Freelance">Freelance</option>
+                              </select>
+                            </div>
+                            <div className="md:col-span-2">
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Salary *
+                              </label>
+                              <input
+                                type="text"
+                                {...registerJob("salary", {
+                                  required: "Required",
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              />
+                            </div>
+                            <div className="md:col-span-2">
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Description *
+                              </label>
+                              <textarea
+                                {...registerJob("description", {
+                                  required: "Required",
+                                })}
+                                rows={3}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF] resize-none"
+                              />
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex gap-3">
                             <button
-                              onClick={() => handleJobEdit(job)}
-                              disabled
-                              className="p-2 text-[#0066FF] hover:bg-blue-50 rounded-lg transition-colors"
+                              type="submit"
+                              disabled={isSubmitting}
+                              className="px-6 py-2 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white rounded-lg hover:shadow-lg transition-all"
                             >
-                              <Edit2 className="w-5 h-5" />
+                              {isSubmitting ? "Saving..." : "Save"}
                             </button>
                             <button
-                              onClick={() => deleteJob(job?.id)}
-                              className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              type="button"
+                              onClick={() => setEditingJobId(null)}
+                              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all"
                             >
-                              <Trash2 className="w-5 h-5" />
+                              Cancel
                             </button>
                           </div>
-                        </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <MapPin className="w-4 h-4" />
-                            {job.location}
+                        </form>
+                      ) : (
+                        // Display Mode
+                        <>
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-start gap-4">
+                              <div className="w-12 h-12 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center text-white font-bold">
+                                {job.logo}
+                              </div>
+                              <div>
+                                <h3 className="text-xl font-bold text-gray-900">
+                                  {job.title}
+                                </h3>
+                                <p className="text-gray-600">{job.company}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleJobEdit(job)}
+                                disabled
+                                className="p-2 text-[#0066FF] hover:bg-blue-50 rounded-lg transition-colors"
+                              >
+                                <Edit2 className="w-5 h-5" />
+                              </button>
+                              <button
+                                onClick={() => deleteJob(job?.id)}
+                                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Trash2 className="w-5 h-5" />
+                              </button>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <Briefcase className="w-4 h-4" />
-                            {job.type}
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <MapPin className="w-4 h-4" />
+                              {job.location}
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <Briefcase className="w-4 h-4" />
+                              {job.type}
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <Calendar className="w-4 h-4" />
+                              {formatDate(job.createdAt)}
+                            </div>
+                            <div className="text-sm font-semibold text-[#0066FF]">
+                              {job.salary}
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <Calendar className="w-4 h-4" />
-                            {formatDate(job.createdAt)}
-                          </div>
-                          <div className="text-sm font-semibold text-[#0066FF]">
-                            {job.salary}
-                          </div>
-                        </div>
-                        <p className="text-gray-600 text-sm">
-                          {job.description}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                          <p className="text-gray-600 text-sm">
+                            {job.description}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
     </div>
