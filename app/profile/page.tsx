@@ -23,7 +23,7 @@ import {
 } from "@/query/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { SpinnerCustom } from "@/components/loading";
+import { Spinner, SpinnerCustom } from "@/components/loading";
 
 type ProfileForm = {
   first_name: string;
@@ -563,15 +563,20 @@ const ProfilePage = () => {
                               <button
                                 onClick={() => handleJobEdit(job)}
                                 disabled
-                                className="p-2 text-[#0066FF] hover:bg-blue-50 rounded-lg transition-colors"
+                                className="p-2 text-[#0066FF] cursor-pointer disabled:cursor-not-allowed hover:bg-blue-50 rounded-lg transition-colors"
                               >
                                 <Edit2 className="w-5 h-5" />
                               </button>
                               <button
                                 onClick={() => deleteJob(job?.id)}
-                                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                disabled={useDeleteJobMe.isPending}
+                                className="p-2 text-red-500 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-white hover:bg-red-50 rounded-lg transition-colors"
                               >
-                                <Trash2 className="w-5 h-5" />
+                                {useDeleteJobMe.isPending ? (
+                                  <Spinner className="h-[30px] w-[30px]" />
+                                ) : (
+                                  <Trash2 className="w-5 h-5" />
+                                )}
                               </button>
                             </div>
                           </div>
