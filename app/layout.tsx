@@ -3,6 +3,7 @@ import { ReduxProvider } from "@/store/provider";
 import "./globals.css";
 import Providers from "@/lib/provider";
 import AuthGuard from "@/components/auth";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Marghai Jobs",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <Providers>
           <ReduxProvider>
             <Navbar />
+            <Analytics />
             <AuthGuard>{children}</AuthGuard>
           </ReduxProvider>
         </Providers>
