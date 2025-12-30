@@ -23,6 +23,7 @@ const authSlice = createSlice({
     },
     setLoginToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
+      state.isLoggedIn = true;
     },
   },
 });

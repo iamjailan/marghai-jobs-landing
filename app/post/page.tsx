@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import {
   Briefcase,
@@ -12,39 +12,39 @@ import {
   Sparkles,
   Calendar,
 } from "lucide-react";
+import { CreateJobInput } from "@/query/functions";
+import { useCreateJob, useGetAllJobs } from "@/query/hooks";
+import { useRouter } from "next/navigation";
 
 const CreateJobPage = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+  const useJob = useCreateJob();
+  const router = useRouter();
+  const useGetJob = useGetAllJobs({ filter: "" });
 
-  const onSubmit = async (data: Record<string, any>) => {
-    setIsSubmitting(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
+  const onSubmit = async (data: CreateJobInput) => {
     const newJob = {
-      id: new Date().getTime(),
-      title: data.jobTitle,
-      company: data.companyName,
+      title: data.title,
+      company: data.company,
       location: data.location,
-      type: data.jobType,
+      type: data.type,
       salary: data.salary,
       deadline: data.deadline,
-      postedDate: new Date(),
       description: data.description,
-      logo: data.companyName.substring(0, 2).toUpperCase(),
     };
 
-    console.log(newJob);
-
-    setIsSubmitting(false);
-    reset();
+    useJob.mutate(newJob, {
+      onSuccess: () => {
+        reset();
+        useGetJob.refetch();
+        router.push("/jobs");
+      },
+    });
   };
 
   return (
@@ -77,7 +77,7 @@ const CreateJobPage = () => {
               </label>
               <input
                 type="text"
-                {...register("jobTitle", {
+                {...register("title", {
                   required: "Job title is required",
                   minLength: {
                     value: 3,
@@ -110,7 +110,7 @@ const CreateJobPage = () => {
               </label>
               <input
                 type="text"
-                {...register("companyName", {
+                {...register("company", {
                   required: "Company name is required",
                   minLength: {
                     value: 2,
@@ -154,6 +154,7 @@ const CreateJobPage = () => {
                 <option value="Mazar-i-Sharif">Mazar-i-Sharif</option>
                 <option value="Kandahar">Kandahar</option>
                 <option value="Jalalabad">Jalalabad</option>
+                <option value="Wardak">Wardak</option>
                 <option value="Remote">Remote</option>
               </select>
               {errors.location &&
@@ -171,7 +172,7 @@ const CreateJobPage = () => {
                   Job Type *
                 </label>
                 <select
-                  {...register("jobType", {
+                  {...register("type", {
                     required: "Job type is required",
                   })}
                   className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
@@ -293,14 +294,14 @@ const CreateJobPage = () => {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={useJob.isPending}
               className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
-                isSubmitting
+                useJob.isPending
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-gradient-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-2xl transform hover:-translate-y-1"
               }`}
             >
-              {isSubmitting ? (
+              {useJob.isPending ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg
                     className="animate-spin h-5 w-5"

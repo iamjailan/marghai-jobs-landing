@@ -20,6 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
+import { useCreateAccount, useLoginAccount } from "@/query/hooks";
+import { setLoginToken } from "@/store/authSlice";
 
 type LoginFormData = {
   email: string;
@@ -41,15 +43,39 @@ export function LoginForm({
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>();
   const dispatch = useAppDispatch();
+  const useAccount = useCreateAccount();
+  const loginAccount = useLoginAccount();
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("Form submitted:", data);
-
-    if (mode === "signin") {
-      router.push("/");
+    if (mode === "signup") {
+      useAccount.mutate(
+        {
+          email: data.email,
+          first_name: "User",
+          last_name: "User",
+          password: data.password,
+        },
+        {
+          onSuccess: (res) => {
+            router.push("/post");
+            dispatch(setLoginToken(res?.token?.access_token));
+          },
+        }
+      );
     } else {
-      router.push("/login");
+      loginAccount.mutate(
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          onSuccess: (res) => {
+            dispatch(setLoginToken(res?.token?.access_token));
+            router.push("/post");
+          },
+        }
+      );
     }
   };
 
@@ -145,6 +171,18 @@ export function LoginForm({
               </Field>
             </FieldGroup>
           </form>
+
+          {loginAccount.isError && (
+            <p className="mt-1 text-sm text-center text-destructive">
+              {loginAccount.error.message}
+            </p>
+          )}
+
+          {useAccount.isError && (
+            <p className="mt-1 text-sm text-center text-destructive">
+              {useAccount.error.message}
+            </p>
+          )}
         </CardContent>
       </Card>
     </div>

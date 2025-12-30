@@ -37,6 +37,15 @@ const Navbar = () => {
             >
               Post a Job
             </Link>
+
+            {isLoggedIn && (
+              <Link
+                href={"/profile"}
+                className="bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300"
+              >
+                Profile
+              </Link>
+            )}
           </div>
 
           <button
@@ -77,11 +86,19 @@ const Navbar = () => {
               Contact
             </button>
             <Link
-              href={"/post"}
+              href={isLoggedIn ? "/post" : "/login"}
               className="w-full bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full"
             >
               Post a Job
             </Link>
+            {isLoggedIn && (
+              <Link
+                href={"/profile"}
+                className="w-full bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-6 py-2 rounded-full"
+              >
+                Post a Job
+              </Link>
+            )}
           </div>
         </div>
       )}

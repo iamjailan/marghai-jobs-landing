@@ -17,12 +17,14 @@ export const apiRequest = async ({
   try {
     let response;
     const state = store.getState() as RootState;
+    const jwtToken = state.auth.token;
 
     if (isAuth) {
       response = await fetch(`${baseUrl}${url}`, {
         method,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
         },
         body: body,
       });
@@ -31,7 +33,7 @@ export const apiRequest = async ({
         const errorData = await response.json();
         if (errorData.statusCode === 401 && state.auth.isLoggedIn) {
           store.dispatch(logout());
-          window.location.href = "/";
+          window.location.href = "/jobs";
           return;
         }
 
