@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Briefcase,
   Search,
   MapPin,
   TrendingUp,
@@ -11,16 +10,17 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import JobCount from "@/components/job-count";
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
               Find Your Dream Job in
-              <span className="block bg-gradient-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
                 Afghanistan
               </span>
             </h1>
@@ -58,13 +58,7 @@ const LandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
-                <Briefcase className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">2,500+</h3>
-              <p className="text-gray-600">Active Job Listings</p>
-            </div>
+            <JobCount />
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-14 h-14 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
                 <Building className="w-7 h-7 text-white" />
@@ -145,23 +139,6 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
-
-      <footer className="bg-gray-900 text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold">Marghai</span>
-          </div>
-          <p className="text-gray-400 mb-4">
-            Connecting Talent with Opportunity in Afghanistan
-          </p>
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Marghai. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/lib/provider";
 import AuthGuard from "@/components/auth";
 import { Analytics } from "@vercel/analytics/next";
+import Footer from "@/components/ui/footer";
 
 export const metadata = {
   title: "Marghai Jobs | Top Jobs Website in Afghanistan",
@@ -65,6 +66,7 @@ export default function RootLayout({
             <Navbar />
             <Analytics />
             <AuthGuard>{children}</AuthGuard>
+            <Footer />
           </ReduxProvider>
         </Providers>
       </body>

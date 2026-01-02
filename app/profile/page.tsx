@@ -54,20 +54,16 @@ const ProfilePage = () => {
     reset,
   } = useForm<ProfileForm>({
     defaultValues: {
-      first_name: customerData?.first_name,
-      last_name: customerData?.last_name,
       email: customerData?.email,
       phone: customerData?.phone,
       location: customerData?.location,
-      company: customerData?.last_name,
+      company: customerData?.company,
     },
   });
 
   useEffect(() => {
     if (customerData) {
       reset({
-        first_name: customerData?.first_name,
-        last_name: customerData?.last_name,
         email: customerData?.email,
         phone: customerData?.phone,
         location: customerData?.location,
@@ -86,8 +82,8 @@ const ProfilePage = () => {
   const handleProfileSubmit = async (data: ProfileForm) => {
     useUpdateMe.mutate(
       {
-        first_name: data?.first_name,
-        last_name: data?.last_name,
+        first_name: data?.company,
+        last_name: data?.company,
         company: data.company,
         location: data.location,
         phone: data.phone,
@@ -118,12 +114,12 @@ const ProfilePage = () => {
     const updatedJob = {
       id: editingJobId,
       title: data.jobTitle,
-      company: data.companyName,
+      company: customerData?.company,
       location: data.location,
       type: data.jobType,
       salary: data.salary,
       description: data.description,
-      logo: data.companyName.substring(0, 2).toUpperCase(),
+      logo: customerData?.company.substring(0, 2).toUpperCase(),
     };
 
     setIsSubmitting(false);
@@ -203,7 +199,7 @@ const ProfilePage = () => {
 
                 <div className="flex-1">
                   <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                    {customerData?.first_name + " " + customerData?.last_name}
+                    {customerData?.company}
                   </h1>
                   <p className="text-gray-600 mb-4">
                     Job Poster • Tech Recruiter
@@ -239,60 +235,6 @@ const ProfilePage = () => {
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <section>
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
-                        <User className="w-4 h-4 text-[#0066FF]" />
-                        First Name *
-                      </label>
-                      <input
-                        type="text"
-                        {...registerProfile("first_name", {
-                          required: "first name is required",
-                          minLength: {
-                            value: 3,
-                            message: "first name must be at least 3 characters",
-                          },
-                        })}
-                        className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                          profileErrors.first_name
-                            ? "border-red-400"
-                            : "border-gray-200 focus:border-[#0066FF]"
-                        }`}
-                      />
-                      {profileErrors.first_name?.message && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {profileErrors.first_name.message}
-                        </p>
-                      )}
-                    </section>
-
-                    <section>
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
-                        <User className="w-4 h-4 text-[#0066FF]" />
-                        Last Name *
-                      </label>
-                      <input
-                        type="text"
-                        {...registerProfile("last_name", {
-                          required: "last name is required",
-                          minLength: {
-                            value: 3,
-                            message: "last name must be at least 3 characters",
-                          },
-                        })}
-                        className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                          profileErrors.first_name
-                            ? "border-red-400"
-                            : "border-gray-200 focus:border-[#0066FF]"
-                        }`}
-                      />
-                      {profileErrors.last_name && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {profileErrors.last_name.message}
-                        </p>
-                      )}
-                    </section>
-
                     <div>
                       <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                         <Mail className="w-4 h-4 text-[#0066FF]" />
@@ -371,18 +313,31 @@ const ProfilePage = () => {
                         <option value="Wardak">Wardak</option>
                         <option value="Kunar">Kunar</option>
                       </select>
+                      {profileErrors.location && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {profileErrors.location.message}
+                        </p>
+                      )}
                     </div>
 
                     <div className="md:col-span-2">
                       <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
                         <Building className="w-4 h-4 text-[#0066FF]" />
-                        Company
+                        Company *
                       </label>
                       <input
                         type="text"
-                        {...registerProfile("company")}
+                        {...registerProfile("company", {
+                          required: "Company Name must not be empty",
+                        })}
                         className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-[#0066FF] transition-all"
                       />
+
+                      {profileErrors.company && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {profileErrors.company.message}
+                        </p>
+                      )}
                     </div>
                   </div>
 

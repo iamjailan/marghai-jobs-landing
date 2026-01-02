@@ -6,6 +6,7 @@ import { useAppSelector } from "@/hooks/redux";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,9 +24,12 @@ const Navbar = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2 cursor-pointer">
-            <div className="w-10 h-10 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-white" />
-            </div>
+            <Image
+              width={40}
+              height={40}
+              src={"/logo.png"}
+              alt="marghai-logo"
+            />
             <span className="text-2xl font-bold bg-linear-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
               Marghai
             </span>

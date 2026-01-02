@@ -13,7 +13,12 @@ import {
   Calendar,
 } from "lucide-react";
 import { CreateJobInput } from "@/query/functions";
-import { useCreateJob, useGetAllJobs, useGetCustomerJob } from "@/query/hooks";
+import {
+  useCreateJob,
+  useCustomerMe,
+  useGetAllJobs,
+  useGetCustomerJob,
+} from "@/query/hooks";
 import { useRouter } from "next/navigation";
 
 const CreateJobPage = () => {
@@ -26,12 +31,14 @@ const CreateJobPage = () => {
   const useJob = useCreateJob();
   const router = useRouter();
   const useGetJob = useGetAllJobs({ filter: "" });
+  const useGetMe = useCustomerMe();
+  const customerData = useGetMe?.data?.data;
   const useCustomerJobs = useGetCustomerJob({ filter: "" });
 
   const onSubmit = async (data: CreateJobInput) => {
     const newJob = {
       title: data.title,
-      company: data.company,
+      company: customerData?.company,
       location: data.location,
       type: data.type,
       salary: data.salary,
@@ -104,36 +111,6 @@ const CreateJobPage = () => {
                     {errors.jobTitle.message}
                   </p>
                 )}
-            </div>
-
-            <div className="mb-6">
-              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
-                <Building className="w-5 h-5 text-[#0066FF]" />
-                Company Name *
-              </label>
-              <input
-                type="text"
-                {...register("company", {
-                  required: "Company name is required",
-                  minLength: {
-                    value: 2,
-                    message: "Company name must be at least 2 characters",
-                  },
-                  maxLength: {
-                    value: 50,
-                    message: "Company name must be less than 50 characters",
-                  },
-                })}
-                className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                  errors.companyName
-                    ? "border-red-400 focus:border-red-500"
-                    : "border-gray-200 focus:border-[#0066FF]"
-                }`}
-                placeholder="e.g. Tech Solutions Afghanistan"
-              />
-              {typeof errors.email?.message === "string" && (
-                <p>{errors.email.message}</p>
-              )}
             </div>
 
             <div className="mb-6">
