@@ -173,9 +173,9 @@ const ProfilePage = () => {
               <div className="flex flex-col md:flex-row items-start md:items-end gap-6 -mt-16 mb-8">
                 <div className="relative">
                   <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-linear-to-br from-[#00cbff] to-[#0066FF] flex items-center justify-center overflow-hidden">
-                    {customerData?.profile_picture ? (
+                    {profileImage ? (
                       <Image
-                        src={customerData?.profile_picture}
+                        src={profileImage}
                         alt="Profile"
                         height={40}
                         width={40}
@@ -362,7 +362,7 @@ const ProfilePage = () => {
             <SpinnerCustom />
           ) : (
             <div className="bg-white rounded-2xl shadow-2xl p-8">
-              {userJobs?.length && (
+              {userJobs?.length > 0 && (
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Your Posted Jobs ({customerJobsCount})
                 </h2>

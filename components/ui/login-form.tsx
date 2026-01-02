@@ -26,6 +26,7 @@ import { setLoginToken } from "@/store/authSlice";
 type LoginFormData = {
   email: string;
   password: string;
+  company: string;
 };
 
 type LoginFormProps = React.ComponentProps<"div"> & {
@@ -52,8 +53,9 @@ export function LoginForm({
       useAccount.mutate(
         {
           email: data.email,
-          first_name: "User",
-          last_name: "User",
+          first_name: data.company,
+          last_name: data.company,
+          company: data.company,
           password: data.password,
         },
         {
@@ -118,6 +120,27 @@ export function LoginForm({
                   </p>
                 )}
               </Field>
+
+              {mode === "signup" && (
+                <Field>
+                  <FieldLabel htmlFor="company">Company</FieldLabel>
+                  <Input
+                    id="company"
+                    type="text"
+                    placeholder="Wadan Group of companies"
+                    aria-invalid={errors.company ? "true" : "false"}
+                    {...register("company", {
+                      required: "company name is required",
+                    })}
+                  />
+                  {errors.company && (
+                    <p className="mt-1 text-sm text-destructive">
+                      {errors.company.message}
+                    </p>
+                  )}
+                </Field>
+              )}
+
               <Field>
                 {/* <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -128,6 +151,7 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div> */}
+
                 <Input
                   id="password"
                   type="password"
@@ -146,6 +170,7 @@ export function LoginForm({
                   </p>
                 )}
               </Field>
+
               <Field>
                 <Button
                   type="submit"

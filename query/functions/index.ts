@@ -23,6 +23,7 @@ export const createAccount = async (body: {
   password: string;
   first_name: string;
   last_name: string;
+  company: string;
 }) => {
   const data = await apiRequest({
     url: "customer/auth/register",
