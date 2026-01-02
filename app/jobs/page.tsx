@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useGetAllJobs } from "@/query/hooks";
 import { SpinnerCustom } from "@/components/loading";
+import Link from "next/link";
 
 const JobsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -102,8 +103,9 @@ const JobsPage = () => {
                 {data?.map((job: any) => {
                   const isNew = isToday(job?.createdAt);
                   return (
-                    <div
+                    <Link
                       key={job.id}
+                      href={`/jobs/${job?.id}`}
                       className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${
                         isNew ? "ring-2 ring-[#00cbff] relative" : ""
                       }`}
@@ -164,7 +166,7 @@ const JobsPage = () => {
                           Apply Now
                         </button>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>

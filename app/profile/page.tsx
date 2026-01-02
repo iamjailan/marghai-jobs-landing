@@ -407,11 +407,13 @@ const ProfilePage = () => {
             <SpinnerCustom />
           ) : (
             <div className="bg-white rounded-2xl shadow-2xl p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Your Posted Jobs ({customerJobsCount})
-              </h2>
+              {userJobs?.length && (
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Your Posted Jobs ({customerJobsCount})
+                </h2>
+              )}
 
-              {userJobs?.length === 0 ? (
+              {!userJobs?.length ? (
                 <div className="text-center py-12">
                   <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 

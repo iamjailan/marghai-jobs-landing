@@ -94,9 +94,27 @@ export const updateCustomer = async (body: {
 
 export const deleteJob = async (id: string) => {
   const data = await apiRequest({
-    url: `customer/jobs/${id}`,
+    url: `customer/jobs/id/${id}`,
     isAuth: true,
     method: "DELETE",
+  });
+
+  return data;
+};
+
+export const getJobById = async (id: string) => {
+  const data = await apiRequest({
+    url: `customer/jobs/id/${id}`,
+  });
+
+  return data;
+};
+
+export const applyToJob = async ({ id, body }: { id: string; body: any }) => {
+  const data = await apiRequest({
+    url: `customer/jobs/id/${id}/apply`,
+    method: "POST",
+    body: JSON.stringify(body),
   });
 
   return data;

@@ -1,11 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  applyToJob,
   createAccount,
   createJob,
   deleteJob,
   getAllJobs,
   getCustomer,
   getCustomerJobs,
+  getJobById,
   loginAccount,
   updateCustomer,
 } from "../functions";
@@ -51,4 +53,17 @@ export const useUpdateCustomer = () => {
 };
 export const useDeleteJob = () => {
   return useMutation({ mutationFn: deleteJob });
+};
+
+export const useGetJobId = (id: string) => {
+  return useQuery({
+    queryKey: ["jobs_by_id", id],
+    queryFn: () => getJobById(id),
+    staleTime: 60 * 60 * 1000,
+    enabled: !!id,
+  });
+};
+
+export const useApplyJob = () => {
+  return useMutation({ mutationFn: applyToJob });
 };
