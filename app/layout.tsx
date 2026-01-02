@@ -18,6 +18,12 @@ export const metadata = {
     "Afghanistan jobs",
     "Jobs in Afghanistan",
     "Remote jobs Afghanistan",
+    "jobs.af",
+    "acbarjobs",
+    "acbar jobs",
+    "acbar",
+    "acbar.org",
+    "wazifah",
 
     "د افغانستان دندې",
     "د کار فرصتونه",
