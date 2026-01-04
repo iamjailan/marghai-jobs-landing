@@ -6,6 +6,8 @@ import AuthGuard from "@/components/auth";
 import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/components/ui/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "@/components/ui/sonner";
+import { CheckApiTime } from "@/components/checkApiTime";
 
 export const metadata = {
   title: "Marghai Jobs | Top Jobs Website in Afghanistan",
@@ -74,6 +76,8 @@ export default function RootLayout({
             <Analytics />
             <SpeedInsights />
             <AuthGuard>{children}</AuthGuard>
+            <Toaster />
+            <CheckApiTime />
             <Footer />
           </ReduxProvider>
         </Providers>
