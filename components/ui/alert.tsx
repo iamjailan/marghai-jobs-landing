@@ -20,8 +20,12 @@ const Alert = (type: AlertType, message: string, description?: string) => {
   return toast[type](message, {
     description,
     position: "top-center",
-    duration: 3000,
+    duration: 8000,
     icon: icons[type],
+    style: {
+      background: "black",
+      color: "white",
+    },
   });
 };
 
