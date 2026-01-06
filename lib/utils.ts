@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const getExpirationDate = (postedDate: Date) => {
   const expiration = new Date(postedDate);
-  expiration.setDate(expiration.getDate() + 30);
+  expiration.setDate(expiration.getDate());
   return expiration;
 };
 

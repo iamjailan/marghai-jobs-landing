@@ -19,8 +19,6 @@ const LandingPage = () => {
   const allJobs = useGetStatistics();
   const counts = allJobs?.data?.data;
 
-  console.log(counts);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const filter = `location=${locationFilter}&search=${searchTerm}`;

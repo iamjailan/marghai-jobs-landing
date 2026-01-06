@@ -46,11 +46,11 @@ const CreateJobPage = () => {
     };
 
     useJob.mutate(newJob, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         reset();
         useGetJob.refetch();
         useCustomerJobs.refetch();
-        router.push("/jobs");
+        router.push(`/jobs/${data?.data?.id}`);
       },
     });
   };

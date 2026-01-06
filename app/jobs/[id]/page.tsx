@@ -75,7 +75,10 @@ const JobDetailsPage = () => {
     return <JobNotFound />;
   }
 
+  console.log(getDaysUntilExpiration(job?.deadline));
+
   const daysUntilExpiration = getDaysUntilExpiration(job?.deadline);
+
   const isExpiringSoon = daysUntilExpiration <= 7;
   const isExpired = daysUntilExpiration < 0;
 
