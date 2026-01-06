@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAppSelector } from "@/hooks/redux";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/authSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -13,6 +13,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -25,22 +26,34 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           <Link
             href={"/"}
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-2 cursor-pointer rounded-full"
           >
             <Image
               width={40}
               height={40}
               src={"/logo.png"}
+              className="rounded-full"
               alt="marghai-logo"
             />
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link href={"/"} className="text-[#0066FF] transition-colors">
+            <Link
+              href={"/"}
+              className={`transition-colors ${
+                pathname === "/"
+                  ? "text-[#0066FF]"
+                  : "text-gray-600 hover:text-[#0066FF]"
+              }`}
+            >
               Home
             </Link>
             <Link
-              className="text-gray-600 hover:text-[#0066FF] transition-colors"
+              className={`transition-colors ${
+                pathname === "/jobs" || pathname.startsWith("/jobs/")
+                  ? "text-[#0066FF]"
+                  : "text-gray-600 hover:text-[#0066FF]"
+              }`}
               href={"/jobs"}
             >
               Jobs
@@ -95,7 +108,9 @@ const Navbar = () => {
             <Link
               href={"/"}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="block w-full cursor-pointer text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg"
+              className={`block w-full cursor-pointer text-left px-4 py-2 rounded-lg hover:bg-gray-50 ${
+                pathname === "/" ? "text-[#0066FF]" : "text-gray-600"
+              }`}
             >
               Home
             </Link>
@@ -104,7 +119,11 @@ const Navbar = () => {
               onClick={() => {
                 setMobileMenuOpen(false);
               }}
-              className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg"
+              className={`block w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 ${
+                pathname === "/jobs" || pathname.startsWith("/jobs/")
+                  ? "text-[#0066FF]"
+                  : "text-gray-600"
+              }`}
             >
               Jobs
             </Link>

@@ -160,16 +160,6 @@ const JobsPage = () => {
                         <p className="text-gray-600 text-sm mb-6 line-clamp-2">
                           {job?.description}
                         </p>
-
-                        <button
-                          className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
-                            isNew
-                              ? "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}
-                        >
-                          Apply Now
-                        </button>
                       </div>
                     </Link>
                   );

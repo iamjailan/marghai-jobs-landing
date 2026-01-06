@@ -59,7 +59,7 @@ const LandingPage = () => {
               </div>
               <Link
                 href={`/jobs?${filter}`}
-                className="bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                className="bg-linear-to-r hover:opacity-85  bg-[#0066FF] hover:bg-[#00cbff] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Search Jobs
                 <ArrowRight className="w-5 h-5" />
