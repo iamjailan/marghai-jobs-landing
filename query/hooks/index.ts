@@ -8,6 +8,7 @@ import {
   getCustomer,
   getCustomerJobs,
   getJobById,
+  getTotalData,
   loginAccount,
   updateCustomer,
 } from "../functions";
@@ -66,4 +67,12 @@ export const useGetJobId = (id: string) => {
 
 export const useApplyJob = () => {
   return useMutation({ mutationFn: applyToJob });
+};
+
+export const useGetStatistics = () => {
+  return useQuery({
+    queryKey: ["customer_status"],
+    queryFn: getTotalData,
+    staleTime: 60 * 60 * 1000,
+  });
 };

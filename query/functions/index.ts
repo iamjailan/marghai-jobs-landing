@@ -120,3 +120,11 @@ export const applyToJob = async ({ id, body }: { id: string; body: any }) => {
 
   return data;
 };
+
+export const getTotalData = async () => {
+  const data = await apiRequest({
+    url: "customer/jobs/statistics",
+  });
+
+  return data;
+};

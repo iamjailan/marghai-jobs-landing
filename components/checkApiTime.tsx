@@ -1,16 +1,16 @@
 "use client";
 
-import { useGetAllJobs } from "@/query/hooks";
+import { useGetStatistics } from "@/query/hooks";
 import { useEffect, useRef } from "react";
 import Alert from "./ui/alert";
 
 export function CheckApiTime() {
-  const jobsQuery = useGetAllJobs({ filter: "" });
+  const status = useGetStatistics();
   const delay = 6000;
   const hasShownRef = useRef(false);
 
   useEffect(() => {
-    if (!jobsQuery.isLoading && !jobsQuery.isFetching) return;
+    if (!status.isLoading && !status.isFetching) return;
 
     const timer = setTimeout(() => {
       if (!hasShownRef.current) {
@@ -24,7 +24,7 @@ export function CheckApiTime() {
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [jobsQuery.isLoading, jobsQuery.isFetching, delay]);
+  }, [status.isLoading, status.isFetching, delay]);
 
   return null;
 }

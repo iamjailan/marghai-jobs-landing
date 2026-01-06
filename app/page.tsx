@@ -13,8 +13,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import JobCount from "@/components/job-count";
+import { useGetStatistics } from "@/query/hooks";
 
 const LandingPage = () => {
+  const allJobs = useGetStatistics();
+  const counts = allJobs?.data?.data;
+
+  console.log(counts);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const filter = `location=${locationFilter}&search=${searchTerm}`;
@@ -73,14 +79,18 @@ const LandingPage = () => {
               <div className="w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
                 <Building className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">850+</h3>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">
+                {counts?.totalCustomers?.toLocaleString("en-US") || 0}+
+              </h3>
               <p className="text-gray-600">Partner Companies</p>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
                 <Users className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">15,000+</h3>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">
+                {counts?.totalApplicants?.toLocaleString("en-US") || 0}+
+              </h3>
               <p className="text-gray-600">Job Seekers</p>
             </div>
           </div>
