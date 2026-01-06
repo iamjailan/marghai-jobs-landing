@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import { SpinnerCustom } from "@/components/loading";
 import { useApplyJob, useGetJobId } from "@/query/hooks";
 import {
@@ -67,6 +68,16 @@ const JobDetailsPage = () => {
     );
   };
 
+  const handleShare = async () => {
+    try {
+      const url = window.location.href;
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied to clipboard!");
+    } catch {
+      toast.error("Failed to copy link");
+    }
+  };
+
   if (useJobById.isLoading) {
     return <SpinnerCustom />;
   }
@@ -74,8 +85,6 @@ const JobDetailsPage = () => {
   if (useJobById.isError) {
     return <JobNotFound />;
   }
-
-  console.log(getDaysUntilExpiration(job?.deadline));
 
   const daysUntilExpiration = getDaysUntilExpiration(job?.deadline);
 
@@ -159,7 +168,10 @@ const JobDetailsPage = () => {
                     >
                       <Bookmark className="w-5 h-5" />
                     </button>
-                    <button className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all">
+                    <button
+                      onClick={handleShare}
+                      className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all"
+                    >
                       <Share2 className="w-5 h-5" />
                     </button>
                   </div>
