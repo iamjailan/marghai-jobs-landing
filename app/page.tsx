@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Search,
   MapPin,
@@ -13,6 +15,10 @@ import Link from "next/link";
 import JobCount from "@/components/job-count";
 
 const LandingPage = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const filter = `location=${locationFilter}&search=${searchTerm}`;
+
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
       <section className="pt-32 pb-20 px-4">
@@ -36,6 +42,8 @@ const LandingPage = () => {
                 <input
                   type="text"
                   placeholder="Job title or keyword"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="flex-1 bg-transparent outline-none text-gray-700"
                 />
               </div>
@@ -44,12 +52,14 @@ const LandingPage = () => {
                 <input
                   type="text"
                   placeholder="Location"
+                  value={locationFilter}
+                  onChange={(e) => setLocationFilter(e.target.value)}
                   className="flex-1 bg-transparent outline-none text-gray-700"
                 />
               </div>
               <Link
-                href={"/jobs"}
-                className="bg-gradient-to-r from-[#00cbff] to-[#0066FF] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                href={`/jobs?${filter}`}
+                className="bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Search Jobs
                 <ArrowRight className="w-5 h-5" />
@@ -60,14 +70,14 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
             <JobCount />
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
+              <div className="w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
                 <Building className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-4xl font-bold text-gray-900 mb-2">850+</h3>
               <p className="text-gray-600">Partner Companies</p>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
+              <div className="w-14 h-14 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-xl flex items-center justify-center mb-4">
                 <Users className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-4xl font-bold text-gray-900 mb-2">15,000+</h3>
@@ -84,7 +94,7 @@ const LandingPage = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-8 rounded-2xl hover:bg-gray-50 transition-colors">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <TrendingUp className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -96,7 +106,7 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="text-center p-8 rounded-2xl hover:bg-gray-50 transition-colors">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -108,7 +118,7 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="text-center p-8 rounded-2xl hover:bg-gray-50 transition-colors">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Clock className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -122,7 +132,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <section className="py-20 px-4 bg-gradient-to-br from-[#00cbff] to-[#0066FF]">
+      <section className="py-20 px-4 bg-linear-to-br from-[#00cbff] to-[#0066FF]">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Start Your Journey?

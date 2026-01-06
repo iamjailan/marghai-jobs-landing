@@ -12,10 +12,15 @@ import {
 import { useGetAllJobs } from "@/query/hooks";
 import { SpinnerCustom } from "@/components/loading";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const JobsPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [locationFilter, setLocationFilter] = useState("");
+  const searchParam = useSearchParams();
+  const location = searchParam.get("location");
+  const search = searchParam.get("search");
+
+  const [searchTerm, setSearchTerm] = useState(search || "");
+  const [locationFilter, setLocationFilter] = useState(location || "");
   const [inputValue, setInputValue] = useState(10);
   const [offset, setOffset] = useState(0);
 
