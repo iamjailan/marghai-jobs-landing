@@ -25,6 +25,20 @@ export const metadata: Metadata = {
       "Explore thousands of job opportunities in Afghanistan. Search and filter jobs by location, title, and more.",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Marghai Jobs Logo",
+      },
+    ],
+  },
+
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
 };
 

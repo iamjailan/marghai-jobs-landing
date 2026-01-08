@@ -44,6 +44,14 @@ export async function generateMetadata({
       type: "website",
       locale: "en_US",
       siteName: "Marghai Dashboard",
+      images: [
+        {
+          url: "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: "Marghai Jobs Logo",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -52,6 +60,12 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `/jobs/${id}`,
+    },
+
+    icons: {
+      icon: "/logo.png",
+      shortcut: "/logo.png",
+      apple: "/logo.png",
     },
   };
 }
