@@ -103,9 +103,10 @@ export const deleteJob = async (id: string) => {
   return data;
 };
 
-export const getJobById = async (id: string) => {
+export const getJobById = async (id: string, showError?: boolean) => {
   const data = await apiRequest({
     url: `customer/jobs/id/${id}`,
+    showError,
   });
 
   return data;

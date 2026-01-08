@@ -8,11 +8,13 @@ export const apiRequest = async ({
   method = "GET",
   url,
   isAuth = false,
+  showError = true,
 }: {
   body?: BodyInit;
   method?: "GET" | "POST" | "DELETE" | "PUT";
   url: string;
   isAuth?: boolean;
+  showError?: boolean;
 }) => {
   try {
     let response;
@@ -61,6 +63,9 @@ export const apiRequest = async ({
     const data = await response.json();
     return data;
   } catch (error) {
+    if (!showError) {
+      return;
+    }
     if (typeof error === "string") {
       throw new Error(error);
     } else if (error instanceof Error) {

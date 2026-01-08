@@ -1,44 +1,24 @@
 import { Metadata } from "next";
 import JobDetailsClient from "@/components/ui/job-details-client";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-async function getJobData(id: string) {
-  try {
-    const response = await fetch(`${baseUrl}/customer/jobs/id/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const data = await response.json();
-    return data?.data;
-  } catch {
-    return null;
-  }
-}
+import { getJobById } from "@/query/functions";
 
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const job = await getJobData(params.id);
+  const { id } = await params;
 
-  console.log(job);
+  const jobResponse = await getJobById(id || "123", false);
 
-  if (!job) {
+  if (!jobResponse || !jobResponse.data) {
     return {
       title: "Job Not Found | Marghai Dashboard",
       description: "The job you are looking for could not be found.",
     };
   }
+
+  const job = jobResponse.data;
 
   const title = `${job.title} at ${job.company} | Marghai Dashboard`;
   const description = job.description
@@ -71,7 +51,7 @@ export async function generateMetadata({
       description,
     },
     alternates: {
-      canonical: `/jobs/${params.id}`,
+      canonical: `/jobs/${id}`,
     },
   };
 }
