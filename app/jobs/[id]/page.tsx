@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import {
   MapPin,
@@ -11,7 +11,6 @@ import {
   Users,
   TrendingUp,
   Share2,
-  Bookmark,
   ArrowLeft,
   Send,
   AlertCircle,
@@ -33,8 +32,6 @@ import JobNotFound from "@/components/ui/job-not-found";
 
 const JobDetailsPage = () => {
   const { id }: { id: string } = useParams();
-  const [applicationSubmitted, setApplicationSubmitted] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
   const useJobApply = useApplyJob();
 
   const useJobById = useGetJobId(id);
@@ -61,7 +58,6 @@ const JobDetailsPage = () => {
       },
       {
         onSuccess: () => {
-          setApplicationSubmitted(true);
           reset();
         },
       }
@@ -158,16 +154,6 @@ const JobDetailsPage = () => {
                   </div>
 
                   <div className="flex gap-2 shrink-0">
-                    <button
-                      onClick={() => setIsSaved(!isSaved)}
-                      className={`p-3 rounded-xl transition-all ${
-                        isSaved
-                          ? "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      }`}
-                    >
-                      <Bookmark className="w-5 h-5" />
-                    </button>
                     <button
                       onClick={handleShare}
                       className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all"
@@ -299,7 +285,7 @@ const JobDetailsPage = () => {
 
             <div className="space-y-6">
               <div className="bg-white rounded-2xl shadow-2xl p-6 sticky top-24">
-                {applicationSubmitted ? (
+                {useJobApply.isSuccess ? (
                   <div className="text-center py-8">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <CheckCircle className="w-8 h-8 text-green-600" />

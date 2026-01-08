@@ -29,6 +29,7 @@ const JobsPage = () => {
       inputValue > 100 || inputValue < 1 ? 10 : inputValue
     }&offset=${offset}`,
   });
+
   const jobsCount = allJobs?.data?.count;
   const data = allJobs?.data?.data;
 
