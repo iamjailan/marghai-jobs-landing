@@ -20,6 +20,7 @@ import {
   useDeleteJob,
   useGetCustomerJob,
   useUpdateCustomer,
+  useUpdateJob,
 } from "@/query/hooks";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,13 +37,13 @@ type ProfileForm = {
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editingJobId, setEditingJobId] = useState(null);
-  const [profileImage, setProfileImage] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingJobId, setEditingJobId] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const useGetMe = useCustomerMe();
   const useUpdateMe = useUpdateCustomer();
   const useCustomerJobs = useGetCustomerJob({ filter: "" });
   const useDeleteJobMe = useDeleteJob();
+  const useUpdateJobMe = useUpdateJob();
   const userJobs = useCustomerJobs?.data?.data;
   const customerData = useGetMe?.data?.data;
   const customerJobsCount = useCustomerJobs?.data?.count;
@@ -100,31 +101,43 @@ const ProfilePage = () => {
   const handleJobEdit = (job: any) => {
     setEditingJobId(job.id);
     setJobValue("jobTitle", job.title);
-    setJobValue("companyName", job.company);
     setJobValue("location", job.location);
     setJobValue("jobType", job.type);
     setJobValue("salary", job.salary);
     setJobValue("description", job.description);
+    // Format deadline for date input (YYYY-MM-DD)
+    if (job.deadline) {
+      const deadlineDate = new Date(job.deadline);
+      const formattedDeadline = deadlineDate.toISOString().split("T")[0];
+      setJobValue("deadline", formattedDeadline);
+    }
   };
 
   const handleJobUpdate = async (data: any) => {
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!editingJobId) return;
 
-    const updatedJob = {
-      id: editingJobId,
+    const updateData = {
       title: data.jobTitle,
-      company: customerData?.company,
       location: data.location,
       type: data.jobType,
       salary: data.salary,
+      deadline: data.deadline,
       description: data.description,
-      logo: customerData?.company.substring(0, 2).toUpperCase(),
     };
 
-    setIsSubmitting(false);
-    setEditingJobId(null);
-    resetJob();
+    useUpdateJobMe.mutate(
+      {
+        id: editingJobId,
+        body: updateData,
+      },
+      {
+        onSuccess: () => {
+          setEditingJobId(null);
+          resetJob();
+          useCustomerJobs.refetch();
+        },
+      }
+    );
   };
 
   const handleImageChange = (e: { target: { files: string[] } }) => {
@@ -411,18 +424,7 @@ const ProfilePage = () => {
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
                               />
                             </div>
-                            <div>
-                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Company *
-                              </label>
-                              <input
-                                type="text"
-                                {...registerJob("companyName", {
-                                  required: "Required",
-                                })}
-                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
-                              />
-                            </div>
+
                             <div>
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
                                 Location *
@@ -471,6 +473,27 @@ const ProfilePage = () => {
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
                               />
                             </div>
+                            <div>
+                              <label className="text-sm font-semibold text-gray-700 mb-1 block">
+                                Application Deadline *
+                              </label>
+                              <input
+                                type="date"
+                                {...registerJob("deadline", {
+                                  required: "Required",
+                                  validate: (value) => {
+                                    const selectedDate = new Date(value);
+                                    const today = new Date();
+                                    today.setHours(0, 0, 0, 0);
+                                    if (selectedDate < today) {
+                                      return "Deadline must be in the future";
+                                    }
+                                    return true;
+                                  },
+                                })}
+                                className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                              />
+                            </div>
                             <div className="md:col-span-2">
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
                                 Description *
@@ -487,10 +510,14 @@ const ProfilePage = () => {
                           <div className="flex gap-3">
                             <button
                               type="submit"
-                              disabled={isSubmitting}
-                              className="px-6 py-2 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white rounded-lg hover:shadow-lg transition-all"
+                              disabled={useUpdateJobMe.isPending}
+                              className={`px-6 py-2 rounded-lg transition-all ${
+                                useUpdateJobMe.isPending
+                                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                  : "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
+                              }`}
                             >
-                              {isSubmitting ? "Saving..." : "Save"}
+                              {useUpdateJobMe.isPending ? "Saving..." : "Save"}
                             </button>
                             <button
                               type="button"
@@ -519,7 +546,7 @@ const ProfilePage = () => {
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleJobEdit(job)}
-                                disabled
+                                disabled={useUpdateJobMe.isPending}
                                 className="p-2 text-[#0066FF] cursor-pointer disabled:cursor-not-allowed hover:bg-blue-50 rounded-lg transition-colors"
                               >
                                 <Edit2 className="w-5 h-5" />
@@ -548,7 +575,7 @@ const ProfilePage = () => {
                             </div>
                             <div className="flex items-center gap-2 text-sm text-gray-600">
                               <Calendar className="w-4 h-4" />
-                              {formatDate(job.createdAt)}
+                              {job.deadline ? formatDate(job.deadline) : "N/A"}
                             </div>
                             <div className="text-sm font-semibold text-[#0066FF]">
                               {job.salary}

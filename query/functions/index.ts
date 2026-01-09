@@ -112,6 +112,17 @@ export const getJobById = async (id: string, showError?: boolean) => {
   return data;
 };
 
+export const updateJobById = async (id: string, body?: any) => {
+  const data = await apiRequest({
+    url: `customer/jobs/${id}`,
+    body: body ? JSON.stringify(body) : undefined,
+    isAuth: true,
+    method: "PUT",
+  });
+
+  return data;
+};
+
 export const applyToJob = async ({ id, body }: { id: string; body: any }) => {
   const data = await apiRequest({
     url: `customer/jobs/id/${id}/apply`,

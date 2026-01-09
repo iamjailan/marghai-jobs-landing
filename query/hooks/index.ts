@@ -11,6 +11,7 @@ import {
   getTotalData,
   loginAccount,
   updateCustomer,
+  updateJobById,
 } from "../functions";
 
 export const useGetAllJobs = ({ filter }: { filter: string }) => {
@@ -74,5 +75,12 @@ export const useGetStatistics = () => {
     queryKey: ["customer_status"],
     queryFn: getTotalData,
     staleTime: 60 * 60 * 1000,
+  });
+};
+
+export const useUpdateJob = () => {
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body?: any }) =>
+      updateJobById(id, body),
   });
 };
