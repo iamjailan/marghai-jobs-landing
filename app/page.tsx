@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import JobCount from "@/components/job-count";
 import { useGetStatistics } from "@/query/hooks";
+import RecentJobs from "@/components/ui/recent-jobs";
 
 const LandingPage = () => {
   const allJobs = useGetStatistics();
@@ -94,6 +95,8 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      <RecentJobs />
 
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
