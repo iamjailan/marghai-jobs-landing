@@ -187,5 +187,9 @@
     "english": "English",
     "pashto": "پښتو",
     "dari": "دری"
+  },
+  "api": {
+    "wakingServer": "Waking up the backend server…",
+    "freeHostingNote": "This project backend server runs on free hosting, so the first request may take a moment."
   }
 }
