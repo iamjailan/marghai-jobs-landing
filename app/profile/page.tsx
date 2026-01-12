@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   Briefcase,
   User,
@@ -15,6 +15,7 @@ import {
   Trash2,
   Calendar,
 } from "lucide-react";
+import { ProvinceSelect } from "@/components/ui/province-select";
 import {
   useCustomerMe,
   useDeleteJob,
@@ -54,6 +55,7 @@ const ProfilePage = () => {
     register: registerProfile,
     handleSubmit: handleSubmitProfile,
     formState: { errors: profileErrors },
+    control,
     reset,
   } = useForm<ProfileForm>({
     defaultValues: {
@@ -349,25 +351,22 @@ const ProfilePage = () => {
                         <MapPin className="w-4 h-4 text-[#0066FF]" />
                         {t("postJob.location")} *
                       </label>
-                      <select
-                        {...registerProfile("location", {
-                          required: t("profile.locationRequired"),
-                        })}
-                        className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                          profileErrors.location
-                            ? "border-red-400"
-                            : "border-gray-200 focus:border-[#0066FF]"
-                        }`}
-                        dir={isRTL ? "rtl" : "ltr"}
-                      >
-                        <option value="Kabul">Kabul</option>
-                        <option value="Herat">Herat</option>
-                        <option value="Mazar-i-Sharif">Mazar-i-Sharif</option>
-                        <option value="Kandahar">Kandahar</option>
-                        <option value="Jalalabad">Jalalabad</option>
-                        <option value="Wardak">Wardak</option>
-                        <option value="Kunar">Kunar</option>
-                      </select>
+                      <Controller
+                        name="location"
+                        control={control}
+                        rules={{ required: t("profile.locationRequired") }}
+                        render={({ field }) => (
+                          <ProvinceSelect
+                            field={field}
+                            className={`${
+                              profileErrors.location
+                                ? "border-red-400"
+                                : "border-gray-200 focus:border-[#0066FF]"
+                            }`}
+                            required
+                          />
+                        )}
+                      />
                       {profileErrors.location && (
                         <p className="text-red-500 text-sm mt-1">
                           {profileErrors.location.message}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   Briefcase,
   MapPin,
@@ -11,6 +11,7 @@ import {
   Sparkles,
   Calendar,
 } from "lucide-react";
+import { ProvinceSelect } from "@/components/ui/province-select";
 import { CreateJobInput } from "@/query/functions";
 import {
   useCreateJob,
@@ -27,6 +28,7 @@ const CreateJobPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
     reset,
   } = useForm();
   const useJob = useCreateJob();
@@ -129,26 +131,23 @@ const CreateJobPage = () => {
                 <MapPin className="w-5 h-5 text-[#0066FF]" />
                 {t("postJob.location")} *
               </label>
-              <select
-                {...register("location", {
-                  required: t("postJob.locationRequired"),
-                })}
-                className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
-                  errors.location
-                    ? "border-red-400 focus:border-red-500"
-                    : "border-gray-200 focus:border-[#0066FF]"
-                }`}
-                dir={isRTL ? "rtl" : "ltr"}
-              >
-                <option value="">{t("postJob.selectLocation")}</option>
-                <option value="Kabul">Kabul</option>
-                <option value="Herat">Herat</option>
-                <option value="Mazar-i-Sharif">Mazar-i-Sharif</option>
-                <option value="Kandahar">Kandahar</option>
-                <option value="Jalalabad">Jalalabad</option>
-                <option value="Wardak">Wardak</option>
-                <option value="Remote">Remote</option>
-              </select>
+              <Controller
+                name="location"
+                control={control}
+                rules={{ required: t("postJob.locationRequired") }}
+                render={({ field }) => (
+                  <ProvinceSelect
+                    field={field}
+                    className={`${
+                      errors.location
+                        ? "border-red-400 focus:border-red-500"
+                        : "border-gray-200 focus:border-[#0066FF]"
+                    }`}
+                    placeholder={t("postJob.selectLocation")}
+                    required
+                  />
+                )}
+              />
               {errors.location &&
                 typeof errors.location.message === "string" && (
                   <p className="text-red-500 text-sm mt-1">
