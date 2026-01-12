@@ -8,6 +8,7 @@ import Footer from "@/components/ui/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { CheckApiTime } from "@/components/checkApiTime";
+import { FirstTimePopup } from "@/components/first-time-popup";
 
 export const metadata = {
   title: "Marghai Jobs | Top Jobs Website in Afghanistan",
@@ -76,6 +77,7 @@ export default function RootLayout({
             <Analytics />
             <SpeedInsights />
             <AuthGuard>{children}</AuthGuard>
+            <FirstTimePopup />
             <Toaster />
             <CheckApiTime />
             <Footer />
