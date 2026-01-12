@@ -1,65 +1,70 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { setHasSeenWelcome } from "@/store/authSlice"
-import { RootState } from "@/store/store"
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { setHasSeenWelcome } from "@/store/authSlice";
+import { RootState } from "@/store/store";
 
 export function FirstTimePopup() {
-  const dispatch = useDispatch()
-  const { hasSeenWelcome } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch();
+  const { hasSeenWelcome } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    // Check if user has seen the welcome popup
     if (!hasSeenWelcome) {
-      // Show the popup
-      const timer = setTimeout(() => {
-        // Auto-show after a short delay
-      }, 1000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => {}, 1000);
+      return () => clearTimeout(timer);
     }
-  }, [hasSeenWelcome])
+  }, [hasSeenWelcome]);
 
   const handleDismiss = () => {
-    dispatch(setHasSeenWelcome(true))
-  }
+    dispatch(setHasSeenWelcome(true));
+  };
 
   return (
-    <Dialog open={!hasSeenWelcome} onOpenChange={(open) => !open && handleDismiss()}>
+    <Dialog
+      open={!hasSeenWelcome}
+      onOpenChange={(open) => !open && handleDismiss()}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <span className="text-2xl">👋</span>
-            Welcome to Marghai Dashboard!
+            Welcome to Marghai Jobs!
           </DialogTitle>
+
           <div className="space-y-3 text-base text-muted-foreground">
-            <div>
-              This is a <strong>side project</strong> created for demonstration purposes.
-            </div>
+            <p>
+              This is a <strong>personal side project</strong> built for
+              learning and demonstration purposes.
+            </p>
+
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
               <p className="text-sm text-yellow-800">
-                <strong>Please note:</strong> All data displayed in this dashboard is <strong>dummy data</strong> and not real.
+                <strong>Heads up:</strong> All data shown here is{" "}
+                <strong>dummy data</strong> and not real.
               </p>
             </div>
-            <div className="text-sm">
-              Feel free to explore the features and interface. This project showcases modern web development techniques using Next.js, React, and Tailwind CSS.
-            </div>
+
+            <p className="text-sm">
+              Feel free to explore the UI and features. This project highlights
+              modern web development using <strong>Next.js</strong>,{" "}
+              <strong>React</strong>, <strong>Nest.js</strong>,{" "}
+              <strong>Postgres</strong>, and <strong>Tailwind CSS</strong>.
+            </p>
           </div>
         </DialogHeader>
+
         <div className="flex justify-end">
-          <Button onClick={handleDismiss}>
-            Got it, thanks!
-          </Button>
+          <Button onClick={handleDismiss}>Got it 👍</Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
