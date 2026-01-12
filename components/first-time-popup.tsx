@@ -11,10 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { setHasSeenWelcome } from "@/store/authSlice";
 import { RootState } from "@/store/store";
+import { useI18n } from "@/lib/i18n";
 
 export function FirstTimePopup() {
   const dispatch = useDispatch();
   const { hasSeenWelcome } = useSelector((state: RootState) => state.auth);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (!hasSeenWelcome) {
@@ -36,33 +38,28 @@ export function FirstTimePopup() {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <span className="text-2xl">👋</span>
-            Welcome to Marghai Jobs!
+            {t("popup.welcome")}
           </DialogTitle>
 
           <div className="space-y-3 text-base text-muted-foreground">
             <p>
-              This is a <strong>personal side project</strong> built for
-              learning and demonstration purposes.
+              {t("popup.disclaimer")}
             </p>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
               <p className="text-sm text-yellow-800">
-                <strong>Heads up:</strong> All data shown here is{" "}
-                <strong>dummy data</strong> and not real.
+                {t("popup.dummyData")}
               </p>
             </div>
 
             <p className="text-sm">
-              Feel free to explore the UI and features. This project highlights
-              modern web development using <strong>Next.js</strong>,{" "}
-              <strong>React</strong>, <strong>Nest.js</strong>,{" "}
-              <strong>Postgres</strong>, and <strong>Tailwind CSS</strong>.
+              {t("popup.techStack")}
             </p>
           </div>
         </DialogHeader>
 
         <div className="flex justify-end">
-          <Button onClick={handleDismiss}>Got it 👍</Button>
+          <Button onClick={handleDismiss}>{t("popup.gotIt")}</Button>
         </div>
       </DialogContent>
     </Dialog>

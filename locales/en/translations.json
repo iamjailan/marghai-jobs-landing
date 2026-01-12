@@ -159,5 +159,33 @@
     "invalidEmail": "Invalid email",
     "phoneRequired": "Phone is required",
     "minimumCharacters": "Minimum 50 characters"
+  },
+  "seo": {
+    "siteTitle": "Marghai Jobs | Top Jobs Website in Afghanistan",
+    "siteDescription": "Marghai Jobs connects talented professionals with leading companies across Afghanistan. Find your dream job today.",
+    "homePageTitle": "Marghai Jobs | Find Your Dream Job in Afghanistan",
+    "homePageDescription": "Discover thousands of job opportunities across Afghanistan. Marghai connects talented professionals with top companies.",
+    "jobsPageTitle": "Browse Jobs | Marghai Jobs - Find Your Dream Job in Afghanistan",
+    "jobsPageDescription": "Explore thousands of job opportunities in Afghanistan. Search by location, title, and company.",
+    "jobPageTitle": "{jobTitle} | Marghai Jobs",
+    "jobPageDescription": "Apply for {jobTitle} at {company} in {location}. Find your dream job on Marghai Jobs."
+  },
+  "popup": {
+    "welcome": "Welcome to Marghai Jobs!",
+    "disclaimer": "This is a personal side project built for learning and demonstration purposes.",
+    "dummyData": "Heads up: All data shown here is dummy data and not real.",
+    "techStack": "Feel free to explore the UI and features. The tech stack includes React, Next.js, and Tailwind CSS.",
+    "gotIt": "Got it 👍"
+  },
+  "footer": {
+    "brand": "Marghai",
+    "tagline": "Connecting Talent with Opportunity in Afghanistan",
+    "copyright": "© {year} Marghai. All rights reserved."
+  },
+  "language": {
+    "switcher": "Language / ژبه / زبان",
+    "english": "English",
+    "pashto": "پښتو",
+    "dari": "دری"
   }
 }

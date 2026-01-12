@@ -23,9 +23,9 @@ const Navbar = () => {
   const { t, isRTL } = useI18n();
 
   const languages: { code: Language; name: string; nativeName: string }[] = [
-    { code: "en", name: "English", nativeName: "English" },
-    { code: "ps", name: "Pashto", nativeName: "پښتو" },
-    { code: "dr", name: "Dari", nativeName: "دری" },
+    { code: "en", name: t("language.english"), nativeName: "English" },
+    { code: "ps", name: t("language.pashto"), nativeName: "پښتو" },
+    { code: "dr", name: t("language.dari"), nativeName: "دری" },
   ];
 
   const handleLanguageChange = (lang: Language) => {
@@ -232,7 +232,7 @@ const Navbar = () => {
             {/* Mobile Language Switcher */}
             <div className="pt-2 border-t border-gray-200">
               <div className="px-4 py-2 text-sm font-medium text-gray-700 mb-2">
-                Language / ژبه / زبان
+                {t("language.switcher")}
               </div>
               {languages.map((lang) => (
                 <button

@@ -1,7 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
+import { useI18n } from "@/lib/i18n";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Footer = () => {
+  const { t } = useI18n();
+  const lang = useSelector(
+    (state: RootState) => state.language.currentLanguage
+  );
+  const currentYear = new Date().getFullYear();
+
+  const persianYear = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+    year: "numeric",
+  }).format(new Date());
+
   return (
     <footer className="bg-gray-900 text-white py-12 px-4">
       <div className="max-w-7xl mx-auto text-center">
@@ -13,13 +28,14 @@ const Footer = () => {
             className="rounded-full"
             alt="marghai-logo"
           />
-          <span className="text-2xl font-bold">Marghai</span>
+          <span className="text-2xl font-bold">{t("footer.brand")}</span>
         </div>
-        <p className="text-gray-400 mb-4">
-          Connecting Talent with Opportunity in Afghanistan
-        </p>
+        <p className="text-gray-400 mb-4">{t("footer.tagline")}</p>
         <p className="text-gray-500 text-sm">
-          © {new Date().getFullYear()} Marghai. All rights reserved.
+          {t("footer.copyright").replace(
+            "{year}",
+            lang === "en" ? currentYear.toString() : persianYear.toString()
+          )}
         </p>
       </div>
     </footer>
