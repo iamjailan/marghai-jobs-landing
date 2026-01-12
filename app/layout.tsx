@@ -10,11 +10,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { CheckApiTime } from "@/components/checkApiTime";
 import { FirstTimePopup } from "@/components/first-time-popup";
 import { I18nProvider } from "@/lib/i18n";
+import { vazirmatn } from "@/lib/fonts";
 
 export const metadata = {
   title: "Marghai Jobs | Top Jobs Website in Afghanistan",
   description:
-    "Marghai Jobs د افغانستان د کارموندنې مخکښ ویب‌سایټ دی. دلته د افغانستان تر ټولو غوره دندې ومومئ. مرغه‌ای جابز بهترین وب‌سایت کاریابی در افغانستان است که جدیدترین فرصت‌های شغلی را ارائه می‌دهد.",
+    "Marghai Jobs د افغانستان د کارموندنې مخکښ ویب‌سایټ دی. دلته د افغانستان تر ټولو غوره دندې ومومئ. مرغۍ جابز بهترین وب‌سایت کاریابی در افغانستان است که جدیدترین فرصت‌های شغلی را ارائه می‌دهد.",
 
   keywords: [
     "Marghai Jobs",
@@ -70,8 +71,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="bg-white text-gray-900">
+    <html lang="en" suppressHydrationWarning className={vazirmatn.variable}>
+      <body className={`${vazirmatn.className} bg-white text-gray-900`}>
         <Providers>
           <ReduxProvider>
             <I18nProvider>
