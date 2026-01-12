@@ -68,6 +68,16 @@
     "linkCopied": "لینک در کلیپ‌بورد کپی شد!",
     "linkCopyFailed": "کپی لینک ناموفق بود"
   },
+  "applicants": {
+    "backToProfile": "بازگشت به پروفایل",
+    "title": "درخواست‌دهندگان",
+    "noApplicants": "هنوز هیچ متقاضی وجود ندارد",
+    "noEmail": "ایمیل ندارد",
+    "noPhone": "تلفن ندارد",
+    "viewResume": "مشاهده رزومه",
+    "noResume": "رزومه ندارد",
+    "coverLetter": "نامه معرفی"
+  },
   "login": {
     "loginTitle": "ورود به حساب کاربری",
     "signupTitle": "ایجاد حساب کاربری",

@@ -68,6 +68,16 @@
     "linkCopied": "لینک کلیپ بورډ ته کاپي شو!",
     "linkCopyFailed": "د لینک کاپي کولو کې ناکامي"
   },
+  "applicants": {
+    "backToProfile": "بېرته پروفایل ته",
+    "title": "درخواست کوونکي",
+    "noApplicants": "تر اوسه هیڅ غوښتنلیک نشته",
+    "noEmail": "برېښلیک نشته",
+    "noPhone": "تلیفون نشته",
+    "viewResume": "CV وګورئ",
+    "noResume": "CV نشته",
+    "coverLetter": "د غوښتنلیک لیک"
+  },
   "login": {
     "loginTitle": "ستاسو حساب ته ننوځئ",
     "signupTitle": "حساب جوړ کړئ",

@@ -595,7 +595,10 @@ const ProfilePage = () => {
                         // Display Mode
                         <>
                           <div className="flex items-start justify-between mb-4">
-                            <div className="flex items-start gap-4">
+                            <Link
+                              href={`/jobs/${job.id}/applicants`}
+                              className="flex items-start gap-4 flex-1 hover:underline"
+                            >
                               <div className="w-12 h-12 bg-linear-to-br from-[#00cbff] to-[#0066FF] rounded-lg flex items-center justify-center text-white font-bold">
                                 {job.logo}
                               </div>
@@ -605,7 +608,7 @@ const ProfilePage = () => {
                                 </h3>
                                 <p className="text-gray-600">{job.company}</p>
                               </div>
-                            </div>
+                            </Link>
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleJobEdit(job)}

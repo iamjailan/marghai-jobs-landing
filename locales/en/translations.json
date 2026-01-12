@@ -68,6 +68,16 @@
     "linkCopied": "Link copied to clipboard!",
     "linkCopyFailed": "Failed to copy link"
   },
+  "applicants": {
+    "backToProfile": "Back to Profile",
+    "title": "Applicants",
+    "noApplicants": "No applicants yet",
+    "noEmail": "No email",
+    "noPhone": "No phone",
+    "viewResume": "View Resume",
+    "noResume": "No resume",
+    "coverLetter": "Cover Letter"
+  },
   "login": {
     "loginTitle": "Login to your account",
     "signupTitle": "Sign up for an account",

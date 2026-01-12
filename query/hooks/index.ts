@@ -8,6 +8,7 @@ import {
   getCustomer,
   getCustomerJobs,
   getJobById,
+  getJobApplicants,
   getTotalData,
   loginAccount,
   updateCustomer,
@@ -61,6 +62,15 @@ export const useGetJobId = (id: string) => {
   return useQuery({
     queryKey: ["jobs_by_id", id],
     queryFn: () => getJobById(id),
+    staleTime: 60 * 60 * 1000,
+    enabled: !!id,
+  });
+};
+
+export const useGetJobApplicants = (id: string) => {
+  return useQuery({
+    queryKey: ["job_applicants", id],
+    queryFn: () => getJobApplicants(id),
     staleTime: 60 * 60 * 1000,
     enabled: !!id,
   });

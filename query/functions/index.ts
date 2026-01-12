@@ -133,6 +133,15 @@ export const applyToJob = async ({ id, body }: { id: string; body: any }) => {
   return data;
 };
 
+export const getJobApplicants = async (id: string) => {
+  const data = await apiRequest({
+    url: `customer/jobs/id/${id}/applicants`,
+    isAuth: true,
+  });
+
+  return data;
+};
+
 export const getTotalData = async () => {
   const data = await apiRequest({
     url: "customer/jobs/statistics",
