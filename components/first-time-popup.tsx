@@ -40,21 +40,19 @@ export function FirstTimePopup() {
             <span className="text-2xl">👋</span>
             Welcome to Marghai Dashboard!
           </DialogTitle>
-          <DialogDescription className="text-base">
-            <div className="space-y-3">
-              <p>
-                This is a <strong>side project</strong> created for demonstration purposes.
-              </p>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                <p className="text-sm text-yellow-800">
-                  <strong>Please note:</strong> All data displayed in this dashboard is <strong>dummy data</strong> and not real.
-                </p>
-              </div>
-              <p className="text-sm">
-                Feel free to explore the features and interface. This project showcases modern web development techniques using Next.js, React, and Tailwind CSS.
+          <div className="space-y-3 text-base text-muted-foreground">
+            <div>
+              This is a <strong>side project</strong> created for demonstration purposes.
+            </div>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <p className="text-sm text-yellow-800">
+                <strong>Please note:</strong> All data displayed in this dashboard is <strong>dummy data</strong> and not real.
               </p>
             </div>
-          </DialogDescription>
+            <div className="text-sm">
+              Feel free to explore the features and interface. This project showcases modern web development techniques using Next.js, React, and Tailwind CSS.
+            </div>
+          </div>
         </DialogHeader>
         <div className="flex justify-end">
           <Button onClick={handleDismiss}>
