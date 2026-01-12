@@ -623,7 +623,7 @@ const ProfilePage = () => {
                                 className="p-2 text-red-500 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-white hover:bg-red-50 rounded-lg transition-colors"
                               >
                                 {useDeleteJobMe.isPending ? (
-                                  <Spinner className="h-[30px] w-[30px]" />
+                                  <Spinner className="h-7.5 w-7.5" />
                                 ) : (
                                   <Trash2 className="w-5 h-5" />
                                 )}

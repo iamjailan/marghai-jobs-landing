@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { User, Mail, Phone, FileText, ArrowLeft } from "lucide-react";
 import { useGetJobApplicants } from "@/query/hooks";
 import { SpinnerCustom } from "@/components/loading";
