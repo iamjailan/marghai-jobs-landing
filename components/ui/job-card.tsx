@@ -3,6 +3,7 @@
 import React from "react";
 import { MapPin, Clock, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 interface JobCardProps {
   job: {
@@ -22,6 +23,7 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, isNew }) => {
+  const { t, isRTL } = useI18n();
   return (
     <Link
       key={job.id}
@@ -29,11 +31,18 @@ const JobCard: React.FC<JobCardProps> = ({ job, isNew }) => {
       className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${
         isNew ? "ring-2 ring-[#00cbff] relative" : ""
       }`}
+      dir={isRTL ? "rtl" : "ltr"}
     >
       {isNew && (
-        <div className="absolute top-0 right-0 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-4 py-1 rounded-bl-xl text-sm font-semibold flex items-center gap-1">
+        <div
+          className={`absolute top-0 ${
+            isRTL ? "left-0 rounded-br-xl" : "right-0 rounded-bl-xl"
+          } bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white px-4 py-1 text-sm font-semibold flex items-center ${
+            isRTL ? "flex-row-reverse gap-1" : "gap-1"
+          }`}
+        >
           <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-          New Today
+          {t("jobs.newToday")}
         </div>
       )}
 

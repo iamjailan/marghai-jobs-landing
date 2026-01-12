@@ -25,6 +25,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Spinner, SpinnerCustom } from "@/components/loading";
+import { useI18n } from "@/lib/i18n";
 
 type ProfileForm = {
   first_name: string;
@@ -36,6 +37,7 @@ type ProfileForm = {
 };
 
 const ProfilePage = () => {
+  const { t, isRTL } = useI18n();
   const [isEditing, setIsEditing] = useState(false);
   const [editingJobId, setEditingJobId] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -172,7 +174,10 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
+    <div
+      className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       {/* Main Content */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
@@ -183,7 +188,11 @@ const ProfilePage = () => {
 
             <div className="px-8 pb-8">
               {/* Profile Image */}
-              <div className="flex flex-col md:flex-row items-start md:items-end gap-6 -mt-16 mb-8">
+              <div
+                className={`flex flex-col md:flex-row items-start md:items-end ${
+                  isRTL ? "flex-row-reverse" : ""
+                } gap-6 -mt-16 mb-8`}
+              >
                 <div className="relative">
                   <div className="w-32 h-32 rounded-2xl border-4 border-white shadow-xl bg-linear-to-br from-[#00cbff] to-[#0066FF] flex items-center justify-center overflow-hidden">
                     {profileImage ? (
@@ -198,7 +207,11 @@ const ProfilePage = () => {
                       <User className="w-16 h-16 text-white" />
                     )}
                   </div>
-                  <label className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                  <label
+                    className={`absolute bottom-0 ${
+                      isRTL ? "left-0" : "right-0"
+                    } bg-white rounded-full p-2 shadow-lg cursor-pointer hover:bg-gray-50 transition-colors`}
+                  >
                     <Camera className="w-5 h-5 text-[#0066FF]" />
                     <input
                       type="file"
@@ -215,14 +228,26 @@ const ProfilePage = () => {
                     {customerData?.company}
                   </h1>
                   <p className="text-gray-600 mb-4">
-                    Job Poster • Tech Recruiter
+                    {t("profile.jobPoster")} • {t("profile.techRecruiter")}
                   </p>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
+                  <div
+                    className={`flex flex-wrap ${
+                      isRTL ? "flex-row-reverse" : ""
+                    } gap-4 text-sm text-gray-600`}
+                  >
+                    <div
+                      className={`flex items-center ${
+                        isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                      }`}
+                    >
                       <Mail className="w-4 h-4" />
                       {customerData?.email}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div
+                      className={`flex items-center ${
+                        isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                      }`}
+                    >
                       <MapPin className="w-4 h-4" />
                       {customerData?.location}
                     </div>
@@ -231,10 +256,12 @@ const ProfilePage = () => {
 
                 <button
                   onClick={() => setIsEditing(!isEditing)}
-                  className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white rounded-xl hover:shadow-lg transition-all"
+                  className={`flex items-center ${
+                    isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                  } px-6 py-3 bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white rounded-xl hover:shadow-lg transition-all`}
                 >
                   <Edit2 className="w-4 h-4" />
-                  {isEditing ? "Cancel" : "Edit Profile"}
+                  {isEditing ? t("profile.cancel") : t("profile.editProfile")}
                 </button>
               </div>
 
@@ -244,23 +271,27 @@ const ProfilePage = () => {
                   className="border-t pt-8 mt-8"
                 >
                   <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Edit Profile Information
+                    {t("profile.editProfileInformation")}
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                      <label
+                        className={`flex items-center ${
+                          isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                        } text-gray-700 font-semibold mb-2`}
+                      >
                         <Mail className="w-4 h-4 text-[#0066FF]" />
-                        Email *
+                        {t("login.email")} *
                       </label>
                       <input
                         type="email"
                         disabled
                         {...registerProfile("email", {
-                          required: "Email is required",
+                          required: t("login.emailRequired"),
                           pattern: {
                             value: /^\S+@\S+$/i,
-                            message: "Invalid email address",
+                            message: t("login.invalidEmail"),
                           },
                         })}
                         className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
@@ -268,6 +299,7 @@ const ProfilePage = () => {
                             ? "border-red-400"
                             : "border-gray-200 focus:border-[#0066FF]"
                         }`}
+                        dir={isRTL ? "rtl" : "ltr"}
                       />
                       {profileErrors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -277,17 +309,21 @@ const ProfilePage = () => {
                     </div>
 
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                      <label
+                        className={`flex items-center ${
+                          isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                        } text-gray-700 font-semibold mb-2`}
+                      >
                         <Phone className="w-4 h-4 text-[#0066FF]" />
-                        Phone *
+                        {t("profile.phone")} *
                       </label>
                       <input
                         type="tel"
                         {...registerProfile("phone", {
-                          required: "Phone is required",
+                          required: t("profile.phoneRequired"),
                           pattern: {
                             value: /^\+?[\d\s-]+$/,
-                            message: "Invalid phone number",
+                            message: t("profile.invalidPhone"),
                           },
                         })}
                         className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
@@ -295,6 +331,7 @@ const ProfilePage = () => {
                             ? "border-red-400"
                             : "border-gray-200 focus:border-[#0066FF]"
                         }`}
+                        dir={isRTL ? "rtl" : "ltr"}
                       />
                       {profileErrors.phone && (
                         <p className="text-red-500 text-sm mt-1">
@@ -304,19 +341,24 @@ const ProfilePage = () => {
                     </div>
 
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                      <label
+                        className={`flex items-center ${
+                          isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                        } text-gray-700 font-semibold mb-2`}
+                      >
                         <MapPin className="w-4 h-4 text-[#0066FF]" />
-                        Location *
+                        {t("postJob.location")} *
                       </label>
                       <select
                         {...registerProfile("location", {
-                          required: "Location is required",
+                          required: t("profile.locationRequired"),
                         })}
                         className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
                           profileErrors.location
                             ? "border-red-400"
                             : "border-gray-200 focus:border-[#0066FF]"
                         }`}
+                        dir={isRTL ? "rtl" : "ltr"}
                       >
                         <option value="Kabul">Kabul</option>
                         <option value="Herat">Herat</option>
@@ -334,16 +376,21 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                      <label
+                        className={`flex items-center ${
+                          isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                        } text-gray-700 font-semibold mb-2`}
+                      >
                         <Building className="w-4 h-4 text-[#0066FF]" />
-                        Company *
+                        {t("login.company")} *
                       </label>
                       <input
                         type="text"
                         {...registerProfile("company", {
-                          required: "Company Name must not be empty",
+                          required: t("profile.companyRequired"),
                         })}
                         className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-[#0066FF] transition-all"
+                        dir={isRTL ? "rtl" : "ltr"}
                       />
 
                       {profileErrors.company && (
@@ -357,14 +404,18 @@ const ProfilePage = () => {
                   <button
                     type="submit"
                     disabled={useUpdateMe.isPending}
-                    className={`mt-6 flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
+                    className={`mt-6 flex items-center ${
+                      isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                    } px-8 py-3 rounded-xl font-semibold transition-all ${
                       useUpdateMe.isPending
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                         : "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
                     }`}
                   >
                     <Save className="w-4 h-4" />
-                    {useUpdateMe.isPending ? "Saving..." : "Save Changes"}
+                    {useUpdateMe.isPending
+                      ? t("profile.saving")
+                      : t("profile.saveChanges")}
                   </button>
                 </form>
               )}
@@ -377,7 +428,7 @@ const ProfilePage = () => {
             <div className="bg-white rounded-2xl shadow-2xl p-8">
               {userJobs?.length > 0 && (
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Your Posted Jobs ({customerJobsCount})
+                  {t("profile.yourPostedJobs")} ({customerJobsCount})
                 </h2>
               )}
 
@@ -386,16 +437,18 @@ const ProfilePage = () => {
                   <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 
                   <p className="text-gray-500 text-lg mb-6">
-                    You have not posted any jobs yet
+                    {t("profile.noJobsPosted")}
                   </p>
 
                   <Link
                     href={"/post"}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg
-               hover:bg-blue-700 transition-colors"
+                    className={`inline-flex items-center ${
+                      isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                    } px-6 py-3 bg-blue-600 text-white rounded-lg
+               hover:bg-blue-700 transition-colors`}
                   >
                     <Briefcase className="w-5 h-5" />
-                    Post a Job
+                    {t("profile.postAJob")}
                   </Link>
                 </div>
               ) : (
@@ -414,26 +467,28 @@ const ProfilePage = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Job Title *
+                                {t("profile.jobTitle")} *
                               </label>
                               <input
                                 type="text"
                                 {...registerJob("jobTitle", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                 })}
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                                dir={isRTL ? "rtl" : "ltr"}
                               />
                             </div>
 
                             <div>
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Location *
+                                {t("postJob.location")} *
                               </label>
                               <select
                                 {...registerJob("location", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                 })}
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                                dir={isRTL ? "rtl" : "ltr"}
                               >
                                 <option value="Kabul">Kabul</option>
                                 <option value="Herat">Herat</option>
@@ -447,13 +502,14 @@ const ProfilePage = () => {
                             </div>
                             <div>
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Job Type *
+                                {t("postJob.jobType")} *
                               </label>
                               <select
                                 {...registerJob("jobType", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                 })}
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                                dir={isRTL ? "rtl" : "ltr"}
                               >
                                 <option value="Full-time">Full-time</option>
                                 <option value="Part-time">Part-time</option>
@@ -463,30 +519,31 @@ const ProfilePage = () => {
                             </div>
                             <div className="md:col-span-2">
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Salary *
+                                {t("postJob.salary")} *
                               </label>
                               <input
                                 type="text"
                                 {...registerJob("salary", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                 })}
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF]"
+                                dir={isRTL ? "rtl" : "ltr"}
                               />
                             </div>
                             <div>
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Application Deadline *
+                                {t("postJob.applicationDeadline")} *
                               </label>
                               <input
                                 type="date"
                                 {...registerJob("deadline", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                   validate: (value) => {
                                     const selectedDate = new Date(value);
                                     const today = new Date();
                                     today.setHours(0, 0, 0, 0);
                                     if (selectedDate < today) {
-                                      return "Deadline must be in the future";
+                                      return t("postJob.deadlineFuture");
                                     }
                                     return true;
                                   },
@@ -496,18 +553,23 @@ const ProfilePage = () => {
                             </div>
                             <div className="md:col-span-2">
                               <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                                Description *
+                                {t("postJob.jobDescription")} *
                               </label>
                               <textarea
                                 {...registerJob("description", {
-                                  required: "Required",
+                                  required: t("profile.required"),
                                 })}
                                 rows={3}
                                 className="w-full px-3 py-2 bg-gray-50 border-2 border-gray-200 rounded-lg outline-none focus:border-[#0066FF] resize-none"
+                                dir={isRTL ? "rtl" : "ltr"}
                               />
                             </div>
                           </div>
-                          <div className="flex gap-3">
+                          <div
+                            className={`flex ${
+                              isRTL ? "flex-row-reverse" : ""
+                            } gap-3`}
+                          >
                             <button
                               type="submit"
                               disabled={useUpdateJobMe.isPending}
@@ -517,14 +579,16 @@ const ProfilePage = () => {
                                   : "bg-linear-to-r from-[#00cbff] to-[#0066FF] text-white hover:shadow-lg"
                               }`}
                             >
-                              {useUpdateJobMe.isPending ? "Saving..." : "Save"}
+                              {useUpdateJobMe.isPending
+                                ? t("profile.saving")
+                                : t("profile.save")}
                             </button>
                             <button
                               type="button"
                               onClick={() => setEditingJobId(null)}
                               className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all"
                             >
-                              Cancel
+                              {t("profile.cancel")}
                             </button>
                           </div>
                         </form>
@@ -564,18 +628,34 @@ const ProfilePage = () => {
                               </button>
                             </div>
                           </div>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div
+                            className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-4`}
+                          >
+                            <div
+                              className={`flex items-center ${
+                                isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                              } text-sm text-gray-600`}
+                            >
                               <MapPin className="w-4 h-4" />
                               {job.location}
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div
+                              className={`flex items-center ${
+                                isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                              } text-sm text-gray-600`}
+                            >
                               <Briefcase className="w-4 h-4" />
                               {job.type}
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div
+                              className={`flex items-center ${
+                                isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                              } text-sm text-gray-600`}
+                            >
                               <Calendar className="w-4 h-4" />
-                              {job.deadline ? formatDate(job.deadline) : "N/A"}
+                              {job.deadline
+                                ? formatDate(job.deadline)
+                                : t("profile.nA")}
                             </div>
                             <div className="text-sm font-semibold text-[#0066FF]">
                               {job.salary}

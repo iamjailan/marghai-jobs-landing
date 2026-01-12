@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { CheckApiTime } from "@/components/checkApiTime";
 import { FirstTimePopup } from "@/components/first-time-popup";
+import { I18nProvider } from "@/lib/i18n";
 
 export const metadata = {
   title: "Marghai Jobs | Top Jobs Website in Afghanistan",
@@ -69,18 +70,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-white text-gray-900">
         <Providers>
           <ReduxProvider>
-            <Navbar />
-            <Analytics />
-            <SpeedInsights />
-            <AuthGuard>{children}</AuthGuard>
-            <FirstTimePopup />
-            <Toaster />
-            <CheckApiTime />
-            <Footer />
+            <I18nProvider>
+              <Navbar />
+              <Analytics />
+              <SpeedInsights />
+              <AuthGuard>{children}</AuthGuard>
+              <FirstTimePopup />
+              <Toaster />
+              <CheckApiTime />
+              <Footer />
+            </I18nProvider>
           </ReduxProvider>
         </Providers>
       </body>

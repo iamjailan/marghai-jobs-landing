@@ -19,8 +19,10 @@ import {
   useGetCustomerJob,
 } from "@/query/hooks";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/lib/i18n";
 
 const CreateJobPage = () => {
+  const { t, isRTL } = useI18n();
   const {
     register,
     handleSubmit,
@@ -56,7 +58,10 @@ const CreateJobPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
+    <div
+      className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
@@ -64,14 +69,12 @@ const CreateJobPage = () => {
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Post a{" "}
+              {t("postJob.title")}{" "}
               <span className="bg-linear-to-r from-[#00cbff] to-[#0066FF] bg-clip-text text-transparent">
-                New Job
+                {t("postJob.newJob")}
               </span>
             </h1>
-            <p className="text-xl text-gray-600">
-              Find the perfect candidate for your company
-            </p>
+            <p className="text-xl text-gray-600">{t("postJob.subtitle")}</p>
           </div>
 
           <form
@@ -80,21 +83,25 @@ const CreateJobPage = () => {
             className="bg-white rounded-2xl shadow-2xl p-8 md:p-10"
           >
             <div className="mb-6">
-              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+              <label
+                className={`flex items-center ${
+                  isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                } text-gray-700 font-semibold mb-2`}
+              >
                 <Briefcase className="w-5 h-5 text-[#0066FF]" />
-                Job Title *
+                {t("postJob.jobTitle")} *
               </label>
               <input
                 type="text"
                 {...register("title", {
-                  required: "Job title is required",
+                  required: t("postJob.jobTitleRequired"),
                   minLength: {
                     value: 3,
-                    message: "Job title must be at least 3 characters",
+                    message: t("postJob.jobTitleMinLength"),
                   },
                   maxLength: {
                     value: 100,
-                    message: "Job title must be less than 100 characters",
+                    message: t("postJob.jobTitleMaxLength"),
                   },
                 })}
                 className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
@@ -102,7 +109,8 @@ const CreateJobPage = () => {
                     ? "border-red-400 focus:border-red-500"
                     : "border-gray-200 focus:border-[#0066FF]"
                 }`}
-                placeholder="e.g. Senior Software Engineer"
+                placeholder={t("postJob.jobTitlePlaceholder")}
+                dir={isRTL ? "rtl" : "ltr"}
               />
               {errors.jobTitle &&
                 typeof errors.jobTitle.message === "string" && (
@@ -113,21 +121,26 @@ const CreateJobPage = () => {
             </div>
 
             <div className="mb-6">
-              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+              <label
+                className={`flex items-center ${
+                  isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                } text-gray-700 font-semibold mb-2`}
+              >
                 <MapPin className="w-5 h-5 text-[#0066FF]" />
-                Location *
+                {t("postJob.location")} *
               </label>
               <select
                 {...register("location", {
-                  required: "Location is required",
+                  required: t("postJob.locationRequired"),
                 })}
                 className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
                   errors.location
                     ? "border-red-400 focus:border-red-500"
                     : "border-gray-200 focus:border-[#0066FF]"
                 }`}
+                dir={isRTL ? "rtl" : "ltr"}
               >
-                <option value="">Select a location</option>
+                <option value="">{t("postJob.selectLocation")}</option>
                 <option value="Kabul">Kabul</option>
                 <option value="Herat">Herat</option>
                 <option value="Mazar-i-Sharif">Mazar-i-Sharif</option>
@@ -146,21 +159,26 @@ const CreateJobPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                <label
+                  className={`flex items-center ${
+                    isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                  } text-gray-700 font-semibold mb-2`}
+                >
                   <Clock className="w-5 h-5 text-[#0066FF]" />
-                  Job Type *
+                  {t("postJob.jobType")} *
                 </label>
                 <select
                   {...register("type", {
-                    required: "Job type is required",
+                    required: t("postJob.jobTypeRequired"),
                   })}
                   className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
                     errors.jobType
                       ? "border-red-400 focus:border-red-500"
                       : "border-gray-200 focus:border-[#0066FF]"
                   }`}
+                  dir={isRTL ? "rtl" : "ltr"}
                 >
-                  <option value="">Select type</option>
+                  <option value="">{t("postJob.selectType")}</option>
                   <option value="Full-time">Full-time</option>
                   <option value="Part-time">Part-time</option>
                   <option value="Contract">Contract</option>
@@ -176,18 +194,21 @@ const CreateJobPage = () => {
               </div>
 
               <div>
-                <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+                <label
+                  className={`flex items-center ${
+                    isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                  } text-gray-700 font-semibold mb-2`}
+                >
                   <DollarSign className="w-5 h-5 text-[#0066FF]" />
-                  Salary *
+                  {t("postJob.salary")} *
                 </label>
                 <input
                   type="text"
                   {...register("salary", {
-                    required: "Salary is required",
+                    required: t("postJob.salaryRequired"),
                     pattern: {
                       value: /^[0-9,\-\s]+AFN$|^Competitive$/i,
-                      message:
-                        'Enter valid salary (e.g., "20,000 AFN" or "Competitive")',
+                      message: t("postJob.invalidSalary"),
                     },
                   })}
                   className={`w-full px-4 py-3 bg-gray-50 border-2 rounded-xl outline-none transition-all ${
@@ -195,7 +216,8 @@ const CreateJobPage = () => {
                       ? "border-red-400 focus:border-red-500"
                       : "border-gray-200 focus:border-[#0066FF]"
                   }`}
-                  placeholder="e.g. 25,000 AFN or Competitive"
+                  placeholder={t("postJob.salaryPlaceholder")}
+                  dir={isRTL ? "rtl" : "ltr"}
                 />
                 {errors.salary && typeof errors.salary.message === "string" && (
                   <p className="text-red-500 text-sm mt-1">
@@ -206,20 +228,24 @@ const CreateJobPage = () => {
             </div>
 
             <div className="mb-6">
-              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+              <label
+                className={`flex items-center ${
+                  isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                } text-gray-700 font-semibold mb-2`}
+              >
                 <Calendar className="w-5 h-5 text-[#0066FF]" />
-                Application Deadline *
+                {t("postJob.applicationDeadline")} *
               </label>
               <input
                 type="date"
                 {...register("deadline", {
-                  required: "Application deadline is required",
+                  required: t("postJob.deadlineRequired"),
                   validate: (value) => {
                     const selectedDate = new Date(value);
                     const today = new Date();
                     today.setHours(0, 0, 0, 0);
                     if (selectedDate < today) {
-                      return "Deadline must be in the future";
+                      return t("postJob.deadlineFuture");
                     }
                     return true;
                   },
@@ -239,20 +265,24 @@ const CreateJobPage = () => {
             </div>
 
             <div className="mb-8">
-              <label className="flex items-center gap-2 text-gray-700 font-semibold mb-2">
+              <label
+                className={`flex items-center ${
+                  isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                } text-gray-700 font-semibold mb-2`}
+              >
                 <FileText className="w-5 h-5 text-[#0066FF]" />
-                Job Description *
+                {t("postJob.jobDescription")} *
               </label>
               <textarea
                 {...register("description", {
-                  required: "Job description is required",
+                  required: t("postJob.descriptionRequired"),
                   minLength: {
                     value: 50,
-                    message: "Description must be at least 50 characters",
+                    message: t("postJob.descriptionMinLength"),
                   },
                   maxLength: {
                     value: 1000,
-                    message: "Description must be less than 1000 characters",
+                    message: t("postJob.descriptionMaxLength"),
                   },
                 })}
                 rows={6}
@@ -261,7 +291,8 @@ const CreateJobPage = () => {
                     ? "border-red-400 focus:border-red-500"
                     : "border-gray-200 focus:border-[#0066FF]"
                 }`}
-                placeholder="Describe the role, responsibilities, and requirements..."
+                placeholder={t("postJob.descriptionPlaceholder")}
+                dir={isRTL ? "rtl" : "ltr"}
               />
               {errors.description &&
                 typeof errors.description.message === "string" && (
@@ -281,7 +312,11 @@ const CreateJobPage = () => {
               }`}
             >
               {useJob.isPending ? (
-                <span className="flex items-center justify-center gap-2">
+                <span
+                  className={`flex items-center ${
+                    isRTL ? "flex-row-reverse" : ""
+                  } justify-center gap-2`}
+                >
                   <svg
                     className="animate-spin h-5 w-5"
                     xmlns="http://www.w3.org/2000/svg"
@@ -302,15 +337,15 @@ const CreateJobPage = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Posting Job...
+                  {t("postJob.postingJob")}
                 </span>
               ) : (
-                "Post Job"
+                t("postJob.postJob")
               )}
             </button>
 
             <p className="text-center text-gray-500 text-sm mt-4">
-              * Required fields
+              {t("postJob.requiredFields")}
             </p>
           </form>
         </div>

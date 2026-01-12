@@ -22,6 +22,7 @@ import Link from "next/link";
 import { useAppDispatch } from "@/hooks/redux";
 import { useCreateAccount, useLoginAccount } from "@/query/hooks";
 import { setLoginToken } from "@/store/authSlice";
+import { useI18n } from "@/lib/i18n";
 
 type LoginFormData = {
   email: string;
@@ -38,6 +39,7 @@ export function LoginForm({
   mode = "signin",
   ...props
 }: LoginFormProps) {
+  const { t, isRTL } = useI18n();
   const {
     register,
     handleSubmit,
@@ -82,37 +84,40 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div
+      className={cn("flex flex-col gap-6", className)}
+      dir={isRTL ? "rtl" : "ltr"}
+      {...props}
+    >
       <Card>
         <CardHeader>
           <CardTitle>
-            {mode === "signin"
-              ? "Login to your account"
-              : "Sign up for an account"}
+            {mode === "signin" ? t("login.loginTitle") : t("login.signupTitle")}
           </CardTitle>
           <CardDescription>
             {mode === "signin"
-              ? "Enter your email below to login to your account"
-              : "Enter your email below to sign up for an account"}
+              ? t("login.loginDescription")
+              : t("login.signupDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{t("login.email")}</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@marghai.com"
                   aria-invalid={errors.email ? "true" : "false"}
                   {...register("email", {
-                    required: "Email is required",
+                    required: t("login.emailRequired"),
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
+                      message: t("login.invalidEmail"),
                     },
                   })}
+                  dir={isRTL ? "rtl" : "ltr"}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-destructive">
@@ -123,15 +128,18 @@ export function LoginForm({
 
               {mode === "signup" && (
                 <Field>
-                  <FieldLabel htmlFor="company">Company</FieldLabel>
+                  <FieldLabel htmlFor="company">
+                    {t("login.company")}
+                  </FieldLabel>
                   <Input
                     id="company"
                     type="text"
                     placeholder="Wadan Group of companies"
                     aria-invalid={errors.company ? "true" : "false"}
                     {...register("company", {
-                      required: "company name is required",
+                      required: t("login.companyRequired"),
                     })}
+                    dir={isRTL ? "rtl" : "ltr"}
                   />
                   {errors.company && (
                     <p className="mt-1 text-sm text-destructive">
@@ -142,13 +150,19 @@ export function LoginForm({
               )}
 
               <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                <div
+                  className={`flex items-center ${
+                    isRTL ? "flex-row-reverse" : ""
+                  }`}
+                >
+                  <FieldLabel htmlFor="password">
+                    {t("login.password")}
+                  </FieldLabel>
                   {/* <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {t("login.forgotPassword")}
                   </a> */}
                 </div>
 
@@ -157,12 +171,13 @@ export function LoginForm({
                   type="password"
                   aria-invalid={errors.password ? "true" : "false"}
                   {...register("password", {
-                    required: "Password is required",
+                    required: t("login.passwordRequired"),
                     minLength: {
                       value: 6,
-                      message: "Password must be at least 6 characters",
+                      message: t("login.passwordMinLength"),
                     },
                   })}
+                  dir={isRTL ? "rtl" : "ltr"}
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-destructive">
@@ -179,21 +194,22 @@ export function LoginForm({
                 >
                   {loginAccount.isPending || useAccount.isPending
                     ? mode === "signin"
-                      ? "Logging in..."
-                      : "Signing up..."
+                      ? t("login.loggingIn")
+                      : t("login.signingUp")
                     : mode === "signin"
-                    ? "Login"
-                    : "Sign up"}
+                    ? t("login.login")
+                    : t("login.signup")}
                 </Button>
                 <FieldDescription className="text-center">
                   {mode === "signin" ? (
                     <>
-                      Don&apos;t have an account?{" "}
-                      <Link href="/signup">Sign up</Link>
+                      {t("login.dontHaveAccount")}{" "}
+                      <Link href="/signup">{t("login.signUpLink")}</Link>
                     </>
                   ) : (
                     <>
-                      Already have an account? <Link href="/login">Login</Link>
+                      {t("login.alreadyHaveAccount")}{" "}
+                      <Link href="/login">{t("login.loginLink")}</Link>
                     </>
                   )}
                 </FieldDescription>
