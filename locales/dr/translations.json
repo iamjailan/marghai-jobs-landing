@@ -35,7 +35,10 @@
     "next": "بعدی",
     "recentJobs": "وظایف اخیر",
     "viewAll": "مشاهده همه",
-    "newToday": "امروز جدید"
+    "newToday": "امروز جدید",
+    "noJobsFound": "هیچ وظیفه‌ای یافت نشد",
+    "noJobsFoundMessage": "ما هیچ وظیفه‌ای مطابق فیلترهای شما پیدا نکردیم.",
+    "browseAll": "مشاهده همه"
   },
   "jobDetails": {
     "backToJobs": "بازگشت به وظایف",

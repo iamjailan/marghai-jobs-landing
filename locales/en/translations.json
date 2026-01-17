@@ -35,7 +35,10 @@
     "next": "Next",
     "recentJobs": "Recent Jobs",
     "viewAll": "View All",
-    "newToday": "New Today"
+    "newToday": "New Today",
+    "noJobsFound": "No jobs found",
+    "noJobsFoundMessage": "We couldn't find any jobs matching your filters.",
+    "browseAll": "Browse All"
   },
   "jobDetails": {
     "backToJobs": "Back to Jobs",

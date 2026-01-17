@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import Alert from "./alert";
 import { useGetAllJobs } from "@/query/hooks";
 import { SpinnerCustom } from "@/components/loading";
 import { useSearchParams } from "next/navigation";
 import JobCard from "./job-card";
+import JobsEmpty from "./jobs-empty";
 import { useI18n } from "@/lib/i18n";
 
 const JobsPage = () => {
@@ -42,6 +44,13 @@ const JobsPage = () => {
 
     return d?.toDateString() === today.toDateString();
   };
+
+  useEffect(() => {
+    if (allJobs?.isError) {
+      const message = (allJobs.error as any)?.message || t("common.error");
+      Alert("error", message);
+    }
+  }, [allJobs?.isError, allJobs?.error, t]);
 
   return (
     <div
@@ -117,52 +126,58 @@ const JobsPage = () => {
             <SpinnerCustom />
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {data?.map((job: any) => {
-                  const isNew = isToday(job?.createdAt);
-                  return <JobCard key={job.id} job={job} isNew={isNew} />;
-                })}
-              </div>
+              {jobsCount === 0 ? (
+                <JobsEmpty />
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    {data?.map((job: any) => {
+                      const isNew = isToday(job?.createdAt);
+                      return <JobCard key={job.id} job={job} isNew={isNew} />;
+                    })}
+                  </div>
 
-              <main
-                className={`flex items-center justify-center ${
-                  isRTL ? "flex-row-reverse gap-4" : "gap-4"
-                }`}
-              >
-                <button
-                  onClick={() => setOffset(offset <= 0 ? 0 : offset - 1)}
-                  disabled={!hasPrevPage}
-                  className={`flex items-center ${
-                    isRTL ? "flex-row-reverse gap-2" : "gap-2"
-                  } px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    !hasPrevPage
-                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      : "bg-white cursor-pointer text-gray-700 hover:bg-gray-100 shadow-lg hover:shadow-xl"
-                  }`}
-                >
-                  <ChevronLeft
-                    className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`}
-                  />
-                  {t("jobs.previous")}
-                </button>
+                  <main
+                    className={`flex items-center justify-center ${
+                      isRTL ? "flex-row-reverse gap-4" : "gap-4"
+                    }`}
+                  >
+                    <button
+                      onClick={() => setOffset(offset <= 0 ? 0 : offset - 1)}
+                      disabled={!hasPrevPage}
+                      className={`flex items-center ${
+                        isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                      } px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                        !hasPrevPage
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-white cursor-pointer text-gray-700 hover:bg-gray-100 shadow-lg hover:shadow-xl"
+                      }`}
+                    >
+                      <ChevronLeft
+                        className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`}
+                      />
+                      {t("jobs.previous")}
+                    </button>
 
-                <button
-                  onClick={() => setOffset(offset + 1)}
-                  disabled={!hasNextPage}
-                  className={`flex items-center ${
-                    isRTL ? "flex-row-reverse gap-2" : "gap-2"
-                  } px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    !hasNextPage
-                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      : "bg-linear-to-r cursor-pointer from-[#00cbff] to-[#0066FF] text-white hover:shadow-xl"
-                  }`}
-                >
-                  {t("jobs.next")}
-                  <ChevronRight
-                    className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`}
-                  />
-                </button>
-              </main>
+                    <button
+                      onClick={() => setOffset(offset + 1)}
+                      disabled={!hasNextPage}
+                      className={`flex items-center ${
+                        isRTL ? "flex-row-reverse gap-2" : "gap-2"
+                      } px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                        !hasNextPage
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-linear-to-r cursor-pointer from-[#00cbff] to-[#0066FF] text-white hover:shadow-xl"
+                      }`}
+                    >
+                      {t("jobs.next")}
+                      <ChevronRight
+                        className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                  </main>
+                </>
+              )}
             </>
           )}
         </div>

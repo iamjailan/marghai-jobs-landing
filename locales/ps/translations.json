@@ -35,7 +35,10 @@
     "next": "راتلونکی",
     "recentJobs": "وروستی دندې",
     "viewAll": "ټول وګورئ",
-    "newToday": "نن ورځ نوی"
+    "newToday": "نن ورځ نوی",
+    "noJobsFound": "هیڅ دنده ونه موندل شوه",
+    "noJobsFoundMessage": "موږ هغه دندې ونه موندلې چې ستاسو د فلټرونو سره سمون لري.",
+    "browseAll": "ټولې دندې وګورئ"
   },
   "jobDetails": {
     "backToJobs": "دندو ته بیرته",

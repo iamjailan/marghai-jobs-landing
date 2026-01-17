@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   MapPin,
@@ -30,6 +30,7 @@ import {
 } from "@/lib/utils";
 import JobNotFound from "@/components/ui/job-not-found";
 import { useI18n } from "@/lib/i18n";
+import Alert from "./alert";
 
 const JobDetailsClient = () => {
   const { t, isRTL } = useI18n();
@@ -62,7 +63,11 @@ const JobDetailsClient = () => {
         onSuccess: () => {
           reset();
         },
-      }
+        onError: (error) => {
+          const message = error.message || t("common.error");
+          Alert("error", message);
+        },
+      },
     );
   };
 
@@ -75,6 +80,13 @@ const JobDetailsClient = () => {
       toast.error(t("jobDetails.linkCopyFailed"));
     }
   };
+
+  useEffect(() => {
+    if (useJobById?.isError) {
+      const message = (useJobById.error as any)?.message || t("common.error");
+      Alert("error", message);
+    }
+  }, [useJobById?.isError, useJobById?.error, t]);
 
   if (useJobById.isLoading) {
     return <SpinnerCustom />;
@@ -219,8 +231,8 @@ const JobDetailsClient = () => {
                         isExpired
                           ? "bg-red-50"
                           : isExpiringSoon
-                          ? "bg-orange-50"
-                          : "bg-green-50"
+                            ? "bg-orange-50"
+                            : "bg-green-50"
                       }`}
                     >
                       <Calendar
@@ -228,8 +240,8 @@ const JobDetailsClient = () => {
                           isExpired
                             ? "text-red-600"
                             : isExpiringSoon
-                            ? "text-orange-600"
-                            : "text-green-600"
+                              ? "text-orange-600"
+                              : "text-green-600"
                         }`}
                       />
                     </div>
@@ -242,15 +254,15 @@ const JobDetailsClient = () => {
                           isExpired
                             ? "text-red-600"
                             : isExpiringSoon
-                            ? "text-orange-600"
-                            : "text-gray-900"
+                              ? "text-orange-600"
+                              : "text-gray-900"
                         }`}
                       >
                         {isExpired
                           ? t("jobDetails.expired")
                           : t("jobDetails.inDays").replace(
                               "{days}",
-                              daysUntilExpiration.toString()
+                              daysUntilExpiration.toString(),
                             )}
                       </p>
                     </div>
