@@ -61,6 +61,11 @@ const JobDetailsClient = () => {
       },
       {
         onSuccess: () => {
+          Alert(
+            "success",
+            `Application submitted! The job poster has received your application.`,
+          );
+
           reset();
         },
         onError: (error) => {
