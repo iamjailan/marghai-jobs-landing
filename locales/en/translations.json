@@ -61,7 +61,7 @@
     "submitApplication": "Submit Application",
     "submitting": "Submitting...",
     "applicationSent": "Application Sent!",
-    "applicationSentMessage": "Your application has been submitted successfully. We'll contact you soon.",
+    "applicationSentMessage": "Application submitted! The job poster has received your application.",
     "jobExpired": "Job Expired",
     "jobExpiredMessage": "This job posting has expired and is no longer accepting applications.",
     "browseActiveJobs": "Browse Active Jobs",
