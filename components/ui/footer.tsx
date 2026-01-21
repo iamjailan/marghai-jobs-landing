@@ -9,7 +9,7 @@ import { RootState } from "@/store/store";
 const Footer = () => {
   const { t } = useI18n();
   const lang = useSelector(
-    (state: RootState) => state.language.currentLanguage
+    (state: RootState) => state.language.currentLanguage,
   );
   const currentYear = new Date().getFullYear();
 
@@ -32,9 +32,20 @@ const Footer = () => {
         </div>
         <p className="text-gray-400 mb-4">{t("footer.tagline")}</p>
         <p className="text-gray-500 text-sm">
+          Built by{" "}
+          <a
+            href="https://github.com/iamjailan"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:underline"
+          >
+            Jailan Samun
+          </a>
+        </p>
+        <p className="text-gray-500 text-sm">
           {t("footer.copyright").replace(
             "{year}",
-            lang === "en" ? currentYear.toString() : persianYear.toString()
+            lang === "en" ? currentYear.toString() : persianYear.toString(),
           )}
         </p>
       </div>
