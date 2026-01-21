@@ -25,10 +25,10 @@ const Alert = (type: AlertType, message: string, description?: string) => {
   };
 
   const colorMap: Record<AlertType, { background: string; color: string }> = {
-    success: { background: "#ecfdf5", color: "#065f46" },
-    error: { background: "#fee2e2", color: "#991b1b" },
-    warning: { background: "#fff7ed", color: "#92400e" },
-    info: { background: "#eff6ff", color: "#1e3a8a" },
+    success: { background: "#065f46", color: "#ecfdf5" },
+    error: { background: "#991b1b", color: "#fee2e2" },
+    warning: { background: "#92400e", color: "#fff7ed" },
+    info: { background: "#1e3a8a", color: "#eff6ff" },
   };
 
   const styles = colorMap[type];
