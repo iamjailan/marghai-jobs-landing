@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://marghai.vercel.com";
+  const baseUrl = "https://marghai.sleepany.com";
 
   const staticPages = ["", "/jobs", "/login", "/signup", "/about", "/post"].map(
     (route) => ({
