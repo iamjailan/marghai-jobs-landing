@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/login", "/signup"],
     },
-    sitemap: "https://marghai.vercel.come/sitemap.xml",
+    sitemap: "https://marghai.sleepany.com/sitemap.xml",
   };
 }
